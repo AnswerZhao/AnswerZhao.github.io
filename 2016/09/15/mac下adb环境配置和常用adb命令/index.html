@@ -15,19 +15,16 @@
 
 
 
-<meta name="description" content="这两天在使用SpannableString时遇到一个bug，比较灵异，记录一下。就是在利用ClickableSpan（不会的可以看我上一篇博客Spannable实现富文本）设置TextView文字部分可点击时，文字刚开始不显示，只有点击了TextView时，文字才会显示（见下图），刚开始以为是哪里设置出了问题，各种检查，但是都没问题呀。">
+<meta name="description" content="mac下adb环境的配置，及在Android开发和调试中常用的adb命令，在此收集整理以作参考备用。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="设置SpannableString后，可点击文本不显示bug的解决">
-<meta property="og:url" content="http://answerzhao.github.io/2016/06/26/Clickable的一个小bug/index.html">
+<meta property="og:title" content="mac下adb环境配置和常用adb命令">
+<meta property="og:url" content="http://answerzhao.github.io/2016/09/15/mac下adb环境配置和常用adb命令/index.html">
 <meta property="og:site_name" content="AnswerZhao的登山之旅">
-<meta property="og:description" content="这两天在使用SpannableString时遇到一个bug，比较灵异，记录一下。就是在利用ClickableSpan（不会的可以看我上一篇博客Spannable实现富文本）设置TextView文字部分可点击时，文字刚开始不显示，只有点击了TextView时，文字才会显示（见下图），刚开始以为是哪里设置出了问题，各种检查，但是都没问题呀。">
-<meta property="og:image" content="http://o73fmyk7q.bkt.clouddn.com/SpanDemo_bug1.png">
-<meta property="og:image" content="http://o73fmyk7q.bkt.clouddn.com/SpanDemo_bug2.png">
-<meta property="og:updated_time" content="2016-09-02T10:52:59.000Z">
+<meta property="og:description" content="mac下adb环境的配置，及在Android开发和调试中常用的adb命令，在此收集整理以作参考备用。">
+<meta property="og:updated_time" content="2016-09-15T08:46:45.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="设置SpannableString后，可点击文本不显示bug的解决">
-<meta name="twitter:description" content="这两天在使用SpannableString时遇到一个bug，比较灵异，记录一下。就是在利用ClickableSpan（不会的可以看我上一篇博客Spannable实现富文本）设置TextView文字部分可点击时，文字刚开始不显示，只有点击了TextView时，文字才会显示（见下图），刚开始以为是哪里设置出了问题，各种检查，但是都没问题呀。">
-<meta name="twitter:image" content="http://o73fmyk7q.bkt.clouddn.com/SpanDemo_bug1.png">
+<meta name="twitter:title" content="mac下adb环境配置和常用adb命令">
+<meta name="twitter:description" content="mac下adb环境的配置，及在Android开发和调试中常用的adb命令，在此收集整理以作参考备用。">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -59,7 +56,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>设置SpannableString后，可点击文本不显示bug的解决 | AnswerZhao的登山之旅</title>
+<title>mac下adb环境配置和常用adb命令 | AnswerZhao的登山之旅</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -273,11 +270,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-Clickable的一个小bug" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-mac下adb环境配置和常用adb命令" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/06/26/Clickable的一个小bug/" class="article-date">
-      <time datetime="2016-06-26T15:28:37.000Z" itemprop="datePublished">2016-06-26</time>
+      <a href="/2016/09/15/mac下adb环境配置和常用adb命令/" class="article-date">
+      <time datetime="2016-09-15T08:38:15.000Z" itemprop="datePublished">2016-09-15</time>
 </a>
 
 
@@ -292,7 +289,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      设置SpannableString后，可点击文本不显示bug的解决
+      mac下adb环境配置和常用adb命令
     </h1>
   
 
@@ -307,7 +304,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bugs/">bugs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/富文本/">富文本</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/adb/">adb</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -317,16 +314,105 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>这两天在使用SpannableString时遇到一个bug，比较灵异，记录一下。<br>就是在利用ClickableSpan（不会的可以看我上一篇博客<a href="http://answerzhao.github.io/2016/06/20/Spannable%E5%AE%9E%E7%8E%B0%E5%AF%8C%E6%96%87%E6%9C%AC/#more">Spannable实现富文本</a>）设置TextView文字部分可点击时，文字刚开始不显示，只有点击了TextView时，文字才会显示（见下图），刚开始以为是哪里设置出了问题，各种检查，但是都没问题呀。</p>
+        <p>mac下adb环境的配置，及在Android开发和调试中常用的adb命令，在此收集整理以作参考备用。</p>
 <ul>
 <li><a id="more"></a>
 </li>
 </ul>
-<p>有bug得显示：<br><img src="http://o73fmyk7q.bkt.clouddn.com/SpanDemo_bug1.png" alt=""><br>于是，就简化问题，去掉各种附加属性设置，然后在依次添加相应属性，找问题所在，最后定位在TextView的gravity上。我发现，只要设置了gravity属性，TextView的显示就会不正常。因此，就去掉gravity属性的设置，然后，一切回归平静，TextView依旧是那个简约而不简单的姿态。</p>
-<p><img src="http://o73fmyk7q.bkt.clouddn.com/SpanDemo_bug2.png" alt="">   </p>
-<p>但是问题还没有完，其他的Span设置呢，于是又试了ForegroundColorSpan、BackgroundColorSpan等，结果都无问题。那就是可点击事件引起的喽。于是，再次回归的可点击设置上，由于我们需要TextView能够响应文本点击事件，我们就需要调用这个方法：tvContent.setMovementMethod(LinkMovementMethod.getInstance())。</p>
-<p>Bingo，终于找到了造成问题的罪魁祸首–就是setMovementMethod方法和gravity属性设置是有冲突，造成文本显示的不正常。因此，如果设置了TextView的文本可点击，那么就去掉gravity属性吧。</p>
-<p>以上，谢谢。</p>
+<h1 id="adb命令配置"><a href="#adb命令配置" class="headerlink" title="adb命令配置"></a>adb命令配置</h1><h3 id="1-在命令行下，进入用户目录"><a href="#1-在命令行下，进入用户目录" class="headerlink" title="1 在命令行下，进入用户目录"></a>1 在命令行下，进入用户目录</h3><blockquote>
+<p>cd $HOME</p>
+</blockquote>
+<h3 id="2-bash-profile文件"><a href="#2-bash-profile文件" class="headerlink" title="2 .bash_profile文件"></a>2 .bash_profile文件</h3><p>输入下行命令获取当前文件列表：</p>
+<blockquote>
+<p>ls -al</p>
+</blockquote>
+<p>查看文件列表，如果没有.bash_profile文件，执行以下命令新建：</p>
+<blockquote>
+<p>touch .bash_profile</p>
+</blockquote>
+<p>如果文件已经存在，则直接执行第3步。</p>
+<h3 id="3-打开-bash-profile文件"><a href="#3-打开-bash-profile文件" class="headerlink" title="3 打开.bash_profile文件"></a>3 打开.bash_profile文件</h3><p>执行下行命令打开文件</p>
+<blockquote>
+<p>open -e .bash_profile</p>
+</blockquote>
+<p>打开文件后，添加sdk的安装路径，如果你是安装的Android Studio而且没有手动去变换路径的话，直接复制下面两行命令后将用户名改为自己电脑的即可。如果自己修改了路径，则找到/Android/sdk/platform-tools和/Android/sdk/tools的路径，替换即可。</p>
+<blockquote>
+<p>export PATH=${PATH}:/Users/用户名/Library/Android/sdk/platform-tools<br>export PATH=${PATH}:/Users/用户名/Library/Android/sdk/tools</p>
+</blockquote>
+<h3 id="4-更新刚配置的环境变量"><a href="#4-更新刚配置的环境变量" class="headerlink" title="4 更新刚配置的环境变量"></a>4 更新刚配置的环境变量</h3><blockquote>
+<p>source .bash_profile</p>
+</blockquote>
+<h3 id="5-执行adb-version查看结果"><a href="#5-执行adb-version查看结果" class="headerlink" title="5 执行adb version查看结果"></a>5 执行adb version查看结果</h3><p>显示adb版本号即为设置成功</p>
+<blockquote>
+<p>Android Debug Bridge version 1.0.36<br>Revision 8f855a3d9b35-android</p>
+</blockquote>
+<h1 id="常用的adb命令"><a href="#常用的adb命令" class="headerlink" title="常用的adb命令"></a>常用的adb命令</h1><p>以下为Android开发和测试中常用的一些adb命令，整理在此，以便使用。</p>
+<h3 id="查看设备命令"><a href="#查看设备命令" class="headerlink" title="查看设备命令"></a>查看设备命令</h3><ul>
+<li>adb devices , 获取设备列表及设备状态</li>
+<li><p>adb get-state, 获取设备的连接状态   </p>
+<blockquote>
+<p>device: 设备正常连接<br>offline: 连接异常<br>unknown: 无连接设备</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="开启和关闭命令"><a href="#开启和关闭命令" class="headerlink" title="开启和关闭命令"></a>开启和关闭命令</h3><ul>
+<li><p>adb kill-server , adb start-server, 开启adb服务和关闭adb服务</p>
+<blockquote>
+<p>应用场景：连接异常，即连接的设备未响应时，一般先kill-server,再start-server。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="安装和卸载命令"><a href="#安装和卸载命令" class="headerlink" title="安装和卸载命令"></a>安装和卸载命令</h3><ul>
+<li><p>adb install xxx.apk , 安装一个apk</p>
+<blockquote>
+<p>xxx.apk 需要为绝对路径，实际操作中直接将apk拖到终端中即可。</p>
+</blockquote>
+</li>
+<li><p>adb install -r xxx.apk</p>
+<blockquote>
+<p>重新安装此apk，但是保留原有的数据和缓存文件</p>
+</blockquote>
+</li>
+<li><p>adb install -s xxx.apk</p>
+<blockquote>
+<p>安装apk到sd卡中，默认为安装到机身内存中</p>
+</blockquote>
+</li>
+<li><p>adb uninstall (-k) <package-name></package-name></p>
+<blockquote>
+<p>卸载apk(-k表示保留数据和缓存文件)</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="清除应用数据和缓存"><a href="#清除应用数据和缓存" class="headerlink" title="清除应用数据和缓存"></a>清除应用数据和缓存</h3><ul>
+<li>adb shell pm clear <package-name></package-name></li>
+</ul>
+<h3 id="强制停止应用"><a href="#强制停止应用" class="headerlink" title="强制停止应用"></a>强制停止应用</h3><ul>
+<li>adb shell am force-stop <package-name></package-name></li>
+</ul>
+<h3 id="设备相关"><a href="#设备相关" class="headerlink" title="设备相关"></a>设备相关</h3><ul>
+<li>adb get-serialno  获取序列号</li>
+<li>adb shell getprop ro.product.model 查看设备型号</li>
+<li>adb shell getprop ro.build.version.release 查看Android系统版本</li>
+<li>adb shell wm density 查看屏幕密度</li>
+<li>adb shell wm size 查看屏幕分辨率</li>
+</ul>
+<h3 id="拷入和拷出文件"><a href="#拷入和拷出文件" class="headerlink" title="拷入和拷出文件"></a>拷入和拷出文件</h3><ul>
+<li><p>adb pull 拷出</p>
+<blockquote>
+<p>adb pull sdcard/simple.txt e:\<br>adb pull sdcard/simple.txt e:\rename.txt  重命名文件名</p>
+</blockquote>
+</li>
+<li><p>adb push 拷入</p>
+<blockquote>
+<p>adb push d:\nice.txt sdcard/  拷贝本地文件到手机sd卡</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<p>本文内容搜集自网络，非原创，若侵权请通知，即刻删除。</p>
+<hr>
+<h4 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h4><p><a href="https://github.com/mzlogin/awesome-adb" target="_blank" rel="external">ADB 用法大全</a><br><a href="https://testerhome.com/topics/2565" target="_blank" rel="external">Android 常用 adb 命令总结</a></p>
 
       
     </div>
@@ -335,13 +421,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/06/26/Clickable的一个小bug/">设置SpannableString后，可点击文本不显示bug的解决</a></p>
+        <p><span>本文标题:</span><a href="/2016/09/15/mac下adb环境配置和常用adb命令/">mac下adb环境配置和常用adb命令</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">AnswerZhao</a></p>
-        <p><span>发布时间:</span>2016-06-26, 23:28:37</p>
-        <p><span>最后更新:</span>2016-09-02, 18:52:59</p>
+        <p><span>发布时间:</span>2016-09-15, 16:38:15</p>
+        <p><span>最后更新:</span>2016-09-15, 16:46:45</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/06/26/Clickable的一个小bug/" title="设置SpannableString后，可点击文本不显示bug的解决">http://answerzhao.github.io/2016/06/26/Clickable的一个小bug/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://answerzhao.github.io/2016/06/26/Clickable的一个小bug/　　作者: AnswerZhao" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/15/mac下adb环境配置和常用adb命令/" title="mac下adb环境配置和常用adb命令">http://answerzhao.github.io/2016/09/15/mac下adb环境配置和常用adb命令/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://answerzhao.github.io/2016/09/15/mac下adb环境配置和常用adb命令/　　作者: AnswerZhao" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -353,16 +439,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/07/01/富文本显示时的emoj或图片和文字对齐的实现/">
-                    解决TextView富文本显示时emoj或图片和文字不对齐的问题
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/06/21/无题/">
-                    原博客丢了，重新开始吧
+                <a href="/2016/07/01/富文本显示时的emoj或图片和文字对齐的实现/">
+                    解决TextView富文本显示时emoj或图片和文字不对齐的问题
                 </a>
             </div>
         
@@ -374,7 +454,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#adb命令配置"><span class="toc-number">1.</span> <span class="toc-text">adb命令配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-在命令行下，进入用户目录"><span class="toc-number">1.0.1.</span> <span class="toc-text">1 在命令行下，进入用户目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-bash-profile文件"><span class="toc-number">1.0.2.</span> <span class="toc-text">2 .bash_profile文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-打开-bash-profile文件"><span class="toc-number">1.0.3.</span> <span class="toc-text">3 打开.bash_profile文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-更新刚配置的环境变量"><span class="toc-number">1.0.4.</span> <span class="toc-text">4 更新刚配置的环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-执行adb-version查看结果"><span class="toc-number">1.0.5.</span> <span class="toc-text">5 执行adb version查看结果</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常用的adb命令"><span class="toc-number">2.</span> <span class="toc-text">常用的adb命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看设备命令"><span class="toc-number">2.0.1.</span> <span class="toc-text">查看设备命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开启和关闭命令"><span class="toc-number">2.0.2.</span> <span class="toc-text">开启和关闭命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装和卸载命令"><span class="toc-number">2.0.3.</span> <span class="toc-text">安装和卸载命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#清除应用数据和缓存"><span class="toc-number">2.0.4.</span> <span class="toc-text">清除应用数据和缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#强制停止应用"><span class="toc-number">2.0.5.</span> <span class="toc-text">强制停止应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设备相关"><span class="toc-number">2.0.6.</span> <span class="toc-text">设备相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拷入和拷出文件"><span class="toc-number">2.0.7.</span> <span class="toc-text">拷入和拷出文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#参考博客"><span class="toc-number">2.0.7.1.</span> <span class="toc-text">参考博客</span></a></li></ol></li></ol></li></ol></li></ol>
         
     </div>
     <style>
@@ -410,7 +490,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"设置SpannableString后，可点击文本不显示bug的解决　| AnswerZhao的登山之旅　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"mac下adb环境配置和常用adb命令　| AnswerZhao的登山之旅　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -426,7 +506,7 @@
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2016/06/26/Clickable的一个小bug/" data-title="设置SpannableString后，可点击文本不显示bug的解决" data-url="http://answerzhao.github.io/2016/06/26/Clickable的一个小bug/"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/09/15/mac下adb环境配置和常用adb命令/" data-title="mac下adb环境配置和常用adb命令" data-url="http://answerzhao.github.io/2016/09/15/mac下adb环境配置和常用adb命令/"></div>
     <script>
         var duoshuoQuery = {short_name:"answerzhao"};
         var loadComment = function(){
@@ -449,15 +529,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/07/01/富文本显示时的emoj或图片和文字对齐的实现/" title="上一篇: 解决TextView富文本显示时emoj或图片和文字不对齐的问题">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/06/21/无题/" title="下一篇: 原博客丢了，重新开始吧">
+            <a href="/2016/07/01/富文本显示时的emoj或图片和文字对齐的实现/" title="下一篇: 解决TextView富文本显示时emoj或图片和文字不对齐的问题">
                 <i class="fa fa-angle-right"></i>
             </a>
         
