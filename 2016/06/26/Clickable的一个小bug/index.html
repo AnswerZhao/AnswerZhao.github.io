@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>设置SpannableString后，可点击文本不显示bug的解决 | AnswerZhao的登山之旅</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="这两天在使用SpannableString时遇到一个bug，比较灵异，记录一下。就是在利用ClickableSpan（不会的可以看我上一篇博客Spannable实现富文本）设置TextView文字部分可点击时，文字刚开始不显示，只有点击了TextView时，文字才会显示（见下图），刚开始以为是哪里设置出了问题，各种检查，但是都没问题呀。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设置SpannableString后，可点击文本不显示bug的解决">
+<meta property="og:url" content="http://answerzhao.github.io/2016/06/26/Clickable的一个小bug/index.html">
+<meta property="og:site_name" content="AnswerZhao的登山之旅">
+<meta property="og:description" content="这两天在使用SpannableString时遇到一个bug，比较灵异，记录一下。就是在利用ClickableSpan（不会的可以看我上一篇博客Spannable实现富文本）设置TextView文字部分可点击时，文字刚开始不显示，只有点击了TextView时，文字才会显示（见下图），刚开始以为是哪里设置出了问题，各种检查，但是都没问题呀。">
+<meta property="og:image" content="http://o73fmyk7q.bkt.clouddn.com/SpanDemo_bug1.png">
+<meta property="og:image" content="http://o73fmyk7q.bkt.clouddn.com/SpanDemo_bug2.png">
+<meta property="og:updated_time" content="2016-09-02T10:52:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设置SpannableString后，可点击文本不显示bug的解决">
+<meta name="twitter:description" content="这两天在使用SpannableString时遇到一个bug，比较灵异，记录一下。就是在利用ClickableSpan（不会的可以看我上一篇博客Spannable实现富文本）设置TextView文字部分可点击时，文字刚开始不显示，只有点击了TextView时，文字才会显示（见下图），刚开始以为是哪里设置出了问题，各种检查，但是都没问题呀。">
+<meta name="twitter:image" content="http://o73fmyk7q.bkt.clouddn.com/SpanDemo_bug1.png">
+  
+    <link rel="alternative" href="/atom.xml" title="AnswerZhao的登山之旅" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="//favicon.png">
+  
+  <script src="/style.js"></script>
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="null" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">AnswerZhao</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">万物有规律，万事有方法</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/随笔">随笔</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">友链</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="3" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="#" title="github">github</a>
+		        
+					<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+		        
+					<a class="rss" target="_blank" href="#" title="rss">rss</a>
+		        
+					<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">AnswerZhao</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="null" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">AnswerZhao</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">万物有规律，万事有方法</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-Clickable的一个小bug" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      设置SpannableString后，可点击文本不显示bug的解决
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这两天在使用SpannableString时遇到一个bug，比较灵异，记录一下。<br>就是在利用ClickableSpan（不会的可以看我上一篇博客<a href="http://answerzhao.github.io/2016/06/20/Spannable%E5%AE%9E%E7%8E%B0%E5%AF%8C%E6%96%87%E6%9C%AC/#more">Spannable实现富文本</a>）设置TextView文字部分可点击时，文字刚开始不显示，只有点击了TextView时，文字才会显示（见下图），刚开始以为是哪里设置出了问题，各种检查，但是都没问题呀。</p>
+<ul>
+<li><a id="more"></a>
+</li>
+</ul>
+<p>有bug得显示：<br><img src="http://o73fmyk7q.bkt.clouddn.com/SpanDemo_bug1.png" alt=""><br>于是，就简化问题，去掉各种附加属性设置，然后在依次添加相应属性，找问题所在，最后定位在TextView的gravity上。我发现，只要设置了gravity属性，TextView的显示就会不正常。因此，就去掉gravity属性的设置，然后，一切回归平静，TextView依旧是那个简约而不简单的姿态。</p>
+<p><img src="http://o73fmyk7q.bkt.clouddn.com/SpanDemo_bug2.png" alt="">   </p>
+<p>但是问题还没有完，其他的Span设置呢，于是又试了ForegroundColorSpan、BackgroundColorSpan等，结果都无问题。那就是可点击事件引起的喽。于是，再次回归的可点击设置上，由于我们需要TextView能够响应文本点击事件，我们就需要调用这个方法：tvContent.setMovementMethod(LinkMovementMethod.getInstance())。</p>
+<p>Bingo，终于找到了造成问题的罪魁祸首–就是setMovementMethod方法和gravity属性设置是有冲突，造成文本显示的不正常。因此，如果设置了TextView的文本可点击，那么就去掉gravity属性吧。</p>
+<p>以上，谢谢。</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/06/26/Clickable的一个小bug/" class="archive-article-date">
+  	<time datetime="2016-06-26T15:28:37.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-06-26</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bugs/">bugs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/富文本/">富文本</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/Android/">Android</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2016/07/01/富文本显示时的emoj或图片和文字对齐的实现/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          解决TextView富文本显示时emoj或图片和文字不对齐的问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/06/21/无题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">原博客丢了，重新开始吧</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 AnswerZhao
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/"
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+      <li data-hook="tools-section-friends"><span class="text">友链</span><i class="icon-link"></i></li>
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/ViewPager/" style="font-size: 10px;">ViewPager</a> <a href="/tags/adb/" style="font-size: 10px;">adb</a> <a href="/tags/bugs/" style="font-size: 10px;">bugs</a> <a href="/tags/emoj/" style="font-size: 10px;">emoj</a> <a href="/tags/富文本/" style="font-size: 20px;">富文本</a> <a href="/tags/折腾/" style="font-size: 10px;">折腾</a>
+    			</div>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends">
+  		
+  			<div class="friends-wrap" id="js-friends">
+  			
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">友情链接1</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">友情链接2</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">友情链接3</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">友情链接4</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">友情链接5</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">友情链接6</a>
+  	        
+  	        </div>
+  		
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>
