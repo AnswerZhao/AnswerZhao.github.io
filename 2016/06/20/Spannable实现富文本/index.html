@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Spannable实现TextView/EditText的富文本显示 | AnswerZhao的登山之旅</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="TextView和EditText都可以设置纯文本的字符串，但是当一个字符串中需要设置不同的文字格式或者插入图片时，我们不可能去设置多个TextView+ImageView来实现，那样要累死了。（话说，刚开始我就是动态添加四个TextView来实现一个效果，好囧）。我们知道，方法setText(CharSequence text)中接收的是CharSequence。而SpannableString">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spannable实现TextView/EditText的富文本显示">
+<meta property="og:url" content="http://answerzhao.github.io/2016/06/20/Spannable实现富文本/index.html">
+<meta property="og:site_name" content="AnswerZhao的登山之旅">
+<meta property="og:description" content="TextView和EditText都可以设置纯文本的字符串，但是当一个字符串中需要设置不同的文字格式或者插入图片时，我们不可能去设置多个TextView+ImageView来实现，那样要累死了。（话说，刚开始我就是动态添加四个TextView来实现一个效果，好囧）。我们知道，方法setText(CharSequence text)中接收的是CharSequence。而SpannableString">
+<meta property="og:image" content="http://o73fmyk7q.bkt.clouddn.com/SpanDemo.png">
+<meta property="og:updated_time" content="2016-09-02T10:53:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spannable实现TextView/EditText的富文本显示">
+<meta name="twitter:description" content="TextView和EditText都可以设置纯文本的字符串，但是当一个字符串中需要设置不同的文字格式或者插入图片时，我们不可能去设置多个TextView+ImageView来实现，那样要累死了。（话说，刚开始我就是动态添加四个TextView来实现一个效果，好囧）。我们知道，方法setText(CharSequence text)中接收的是CharSequence。而SpannableString">
+<meta name="twitter:image" content="http://o73fmyk7q.bkt.clouddn.com/SpanDemo.png">
+  
+    <link rel="alternative" href="/atom.xml" title="AnswerZhao的登山之旅" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="//favicon.png">
+  
+  <script src="/style.js"></script>
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="null" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">AnswerZhao</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">万物有规律，万事有方法</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/随笔">随笔</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">友链</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="3" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="#" title="github">github</a>
+		        
+					<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+		        
+					<a class="rss" target="_blank" href="#" title="rss">rss</a>
+		        
+					<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">AnswerZhao</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="null" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">AnswerZhao</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">万物有规律，万事有方法</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-Spannable实现富文本" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spannable实现TextView/EditText的富文本显示
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>TextView和EditText都可以设置纯文本的字符串，但是当一个字符串中需要设置不同的文字格式或者插入图片时，我们不可能去设置多个TextView+ImageView来实现，那样要累死了。（话说，刚开始我就是动态添加四个TextView来实现一个效果，好囧）。我们知道，方法setText(CharSequence text)中接收的是CharSequence。而SpannableString和SpannableStringBuilder是其实现类，是可以直接赋值的，并且，两者的setSpan()方法可以设置一些格式对象（例如字体大小，下划线，替换为图片，等），这就可以实现富文本了。</p>
+<ul>
+<li><a id="more"></a>
+</li>
+</ul>
+<h1 id="TextView和EditText灵活设置文字格式"><a href="#TextView和EditText灵活设置文字格式" class="headerlink" title="TextView和EditText灵活设置文字格式"></a>TextView和EditText灵活设置文字格式</h1><p>TextView和EditText都可以设置纯文本的字符串，但是当一个字符串中需要设置不同的文字格式或者插入图片时，我们不可能去设置多个TextView+ImageView来实现，那样要累死了。（话说，刚开始我就是动态添加四个TextView来实现一个效果，好囧）。我们知道，方法setText(CharSequence text)中接收的是CharSequence。而SpannableString和SpannableStringBuilder是其实现类，是可以直接赋值的，并且，两者的setSpan()方法可以设置一些格式对象（例如字体大小，下划线，替换为图片，等），这就可以实现富文本了。</p>
+<p>接口 Spannable—&gt;Spanned—&gt;CharSequence</p>
+<p>实现子类：</p>
+<p>|–Editable</p>
+<p>|–SpannableString </p>
+<p>|–SpannableStringBuilder（–&gt;Editale）</p>
+<p>Spannable中定义了抽象方法：setSpan(Object what, int start, int end, int flags)和removeSpan(Object what)。这两个方法实现了对字符串的灵活编辑。</p>
+<p>可以实现一下效果：<br><img src="http://o73fmyk7q.bkt.clouddn.com/SpanDemo.png" alt=""></p>
+<h1 id="各Span的简单应用"><a href="#各Span的简单应用" class="headerlink" title="各Span的简单应用"></a>各Span的简单应用</h1><p>以下是一些常用到的一些Span：   </p>
+<ul>
+<li>BackgroundColorSpan</li>
+<li>ForegroundColorSpan</li>
+<li>StyleSpan</li>
+<li>TypefaceSpan</li>
+<li>ImageSpan</li>
+<li>URLSpan</li>
+<li>UnderlineSpan</li>
+<li>StrikethroughSpan(删除线)   </li>
+</ul>
+<p>具体没啥说的，见名知意，直接看代码：   </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setSpan</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">        SpannableString spannableString = <span class="keyword">new</span> SpannableString(<span class="string">"君不见黄河之水天上来，"</span>);</div><div class="line"></div><div class="line">        SpannableString spannableString2 = <span class="keyword">new</span> SpannableString(<span class="string">"奔流到海不复回。"</span>);</div><div class="line"></div><div class="line">        SpannableString spannableString3 = <span class="keyword">new</span> SpannableString(<span class="string">"君不见高堂明镜悲白发，"</span>);</div><div class="line"></div><div class="line">        SpannableString spannableString4 = <span class="keyword">new</span> SpannableString(<span class="string">"朝如青丝暮成雪。"</span>);</div><div class="line"></div><div class="line">        SpannableString spannableString5 = <span class="keyword">new</span> SpannableString(<span class="string">"人生得意须尽欢。"</span>);</div><div class="line"></div><div class="line">        SpannableString spannableString6 = <span class="keyword">new</span> SpannableString(<span class="string">"莫使金樽空对月。"</span>);</div><div class="line"></div><div class="line"></div><div class="line">        ForegroundColorSpan foregroundColorSpan = <span class="keyword">new</span> ForegroundColorSpan(Color.GREEN);</div><div class="line"></div><div class="line">        BackgroundColorSpan backgroundColorSpan = <span class="keyword">new</span> BackgroundColorSpan(Color.CYAN);<span class="comment">// 同ForegroundColorSpan应用一样</span></div><div class="line"></div><div class="line"></div><div class="line">        AbsoluteSizeSpan absoluteSizeSpan = <span class="keyword">new</span> AbsoluteSizeSpan(<span class="number">32</span>,<span class="keyword">true</span>);<span class="comment">// 32dp</span></div><div class="line"></div><div class="line"></div><div class="line">        UnderlineSpan underlineSpan = <span class="keyword">new</span> UnderlineSpan();</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">// 文本字体格式，加粗，倾斜</span></div><div class="line">        StyleSpan styleSpan = <span class="keyword">new</span> StyleSpan(Typeface.BOLD_ITALIC);</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">// 这四种flags的显示效果是一样的，包前不包后</span></div><div class="line">        spannableString.setSpan(foregroundColorSpan,<span class="number">1</span>,<span class="number">5</span>, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);</div><div class="line"></div><div class="line">        spannableString.setSpan(styleSpan, <span class="number">1</span>, <span class="number">5</span>, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);</div><div class="line"></div><div class="line">        spannableString2.setSpan(underlineSpan, <span class="number">1</span>, <span class="number">5</span>, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);</div><div class="line"></div><div class="line">        spannableString3.setSpan(absoluteSizeSpan, <span class="number">1</span>, <span class="number">5</span>, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);</div><div class="line"></div><div class="line">        spannableString4.setSpan(backgroundColorSpan, <span class="number">1</span>, <span class="number">5</span>, Spanned.SPAN_INCLUSIVE_INCLUSIVE);</div><div class="line"></div><div class="line"></div><div class="line">        ImageSpan imageSpan = <span class="keyword">new</span> ImageSpan(<span class="keyword">this</span>,R.mipmap.iv_lyf);</div><div class="line"></div><div class="line">        spannableString5.setSpan(imageSpan, <span class="number">1</span>, <span class="number">4</span>, Spanned.SPAN_COMPOSING);</div><div class="line"></div><div class="line"></div><div class="line">        Drawable drawable = getResources().getDrawable(R.mipmap.iv_lyf);</div><div class="line"></div><div class="line">        drawable.setBounds(<span class="number">0</span>, <span class="number">0</span>, drawable.getIntrinsicWidth()/<span class="number">3</span>, drawable.getIntrinsicHeight()/<span class="number">3</span>);<span class="comment">//缩小为1/3</span></div><div class="line"></div><div class="line">        ImageSpan imageSpan1 = <span class="keyword">new</span> ImageSpan(drawable, ImageSpan.ALIGN_BOTTOM);</div><div class="line"></div><div class="line">        spannableString6.setSpan(imageSpan1,<span class="number">1</span>,<span class="number">5</span>,Spanned.SPAN_COMPOSING);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        textView.setText(spannableString);</div><div class="line"></div><div class="line">        textView2.setText(spannableString2);</div><div class="line"></div><div class="line">        textView3.setText(spannableString3);</div><div class="line"></div><div class="line">        textView4.setText(spannableString4);</div><div class="line"></div><div class="line">        textView5.setText(spannableString5);</div><div class="line"></div><div class="line">        textView6.setText(spannableString6);</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">// 以上四种span对于新增加的文字有效果</span></div><div class="line"></div><div class="line"><span class="comment">//        editText.setText(spannableString);// Spanned.SPAN_EXCLUSIVE_EXCLUSIVE 在span的文字前后新加文字都不会有span设置的效果</span></div><div class="line"></div><div class="line"><span class="comment">//        editText.setText(spannableString2);// Spanned.SPAN_EXCLUSIVE_INCLUSIVE 在span的文字前后新加文字，前边无效果，后边会复用效果</span></div><div class="line"></div><div class="line"><span class="comment">//        editText.setText(spannableString3);// Spanned.SPAN_INCLUSIVE_EXCLUSIVE 在span的文字前后新加文字，前边会复用效果，后边无效果</span></div><div class="line"></div><div class="line">        editText.setText(spannableString4);<span class="comment">// Spanned.SPAN_INCLUSIVE_INCLUSIVE 在span的文字前后新加文字，前边和后边都会复用效果</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上是SpannableString的应用，还有一个SpannableStringBuilder，他们两个区别就是，后者可以通过append()方法动态添加文本。其他用法相同。如下：   </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setSpan2</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    SpannableStringBuilder spannableStringBuilder = <span class="keyword">new</span> SpannableStringBuilder(<span class="string">"天生我材必有用，"</span>);</div><div class="line"></div><div class="line"></div><div class="line">    ForegroundColorSpan foregroundColorSpan = <span class="keyword">new</span> ForegroundColorSpan(Color.RED);</div><div class="line"></div><div class="line">    StrikethroughSpan strikethroughSpan =<span class="keyword">new</span> StrikethroughSpan();</div><div class="line"></div><div class="line"></div><div class="line">    spannableStringBuilder.setSpan(foregroundColorSpan,<span class="number">0</span>,<span class="number">3</span>,Spanned.SPAN_COMPOSING);</div><div class="line"></div><div class="line"></div><div class="line">    spannableStringBuilder.append(<span class="string">"千金散尽还复来。"</span>);</div><div class="line"></div><div class="line">    spannableStringBuilder.setSpan(strikethroughSpan,<span class="number">3</span>,<span class="number">12</span>,Spanned.SPAN_COMPOSING);</div><div class="line"></div><div class="line"></div><div class="line">    textView7.setText(spannableStringBuilder);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="利用ClickableSpan实现可点击文本"><a href="#利用ClickableSpan实现可点击文本" class="headerlink" title="利用ClickableSpan实现可点击文本"></a>利用ClickableSpan实现可点击文本</h1><p>在项目中，点赞人名的依次排列并可点击的场景是很常用的，具体实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setMoreLikers</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// 构造多个超链接的html, 通过选中的位置来获取用户名</span></div><div class="line"></div><div class="line">    StringBuilder sbBuilder = <span class="keyword">new</span> StringBuilder();</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">15</span>; i++) &#123;</div><div class="line"></div><div class="line">        sbBuilder.append(<span class="string">"liker"</span> + i + <span class="string">"、"</span>);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    String likers = sbBuilder.substring(<span class="number">0</span>, sbBuilder.lastIndexOf(<span class="string">"、"</span>)).toString();</div><div class="line"></div><div class="line">    textView8.setMovementMethod(LinkMovementMethod.getInstance());<span class="comment">//</span></div><div class="line"></div><div class="line">    textView8.setText(addClickablePart(likers), TextView.BufferType.SPANNABLE);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"></div><div class="line"> * ClickableSpan 可点击的文本</div><div class="line"></div><div class="line"> * <span class="doctag">@param</span> str</div><div class="line"></div><div class="line"> * <span class="doctag">@return</span></div><div class="line"></div><div class="line"> */</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> SpannableStringBuilder <span class="title">addClickablePart</span><span class="params">(String str)</span> </span>&#123;</div><div class="line"></div><div class="line">    Drawable drawable = getResources().getDrawable(R.mipmap.ic_like);</div><div class="line"></div><div class="line">    drawable.setBounds(<span class="number">0</span>,<span class="number">0</span>,<span class="number">30</span>,<span class="number">30</span>);<span class="comment">// 设置大小</span></div><div class="line"></div><div class="line">    <span class="comment">// 赞的图标</span></div><div class="line"></div><div class="line">    ImageSpan span = <span class="keyword">new</span> ImageSpan(drawable, DynamicDrawableSpan.ALIGN_BASELINE);</div><div class="line"></div><div class="line">    SpannableString spanStr = <span class="keyword">new</span> SpannableString(<span class="string">"l"</span>);<span class="comment">// 被替换的</span></div><div class="line"></div><div class="line">    spanStr.setSpan(span, <span class="number">0</span>, <span class="number">1</span>, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);</div><div class="line"></div><div class="line">    <span class="comment">// 将赞的图标和赞的人名拼接</span></div><div class="line"></div><div class="line">    SpannableStringBuilder ssb = <span class="keyword">new</span> SpannableStringBuilder(spanStr);</div><div class="line"></div><div class="line">    ssb.append(str) ;</div><div class="line"></div><div class="line"></div><div class="line">    String[] likers = str.split(<span class="string">"、"</span>);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">if</span> (likers.length &gt; <span class="number">0</span>) &#123;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; likers.length; i++) &#123;</div><div class="line"></div><div class="line">            <span class="keyword">final</span> String name = likers[i];</div><div class="line"></div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> start = str.indexOf(name) + spanStr.length();</div><div class="line"></div><div class="line">            ssb.setSpan(<span class="keyword">new</span> ClickableSpan() &#123;</div><div class="line"></div><div class="line"></div><div class="line">                <span class="meta">@Override</span></div><div class="line"></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View widget)</span> </span>&#123;</div><div class="line"></div><div class="line">                    Toast.makeText(MainActivity.<span class="keyword">this</span>, name, Toast.LENGTH_SHORT).show();</div><div class="line"></div><div class="line">                &#125;</div><div class="line"></div><div class="line"></div><div class="line">                <span class="meta">@Override</span></div><div class="line"></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateDrawState</span><span class="params">(TextPaint ds)</span> </span>&#123;</div><div class="line"></div><div class="line">                    <span class="keyword">super</span>.updateDrawState(ds);</div><div class="line"></div><div class="line">                    <span class="comment">// 设置文本颜色</span></div><div class="line"></div><div class="line">                    ds.setColor(Color.RED);</div><div class="line"></div><div class="line">                    <span class="comment">// 去掉下划线</span></div><div class="line"></div><div class="line">                    ds.setUnderlineText(<span class="keyword">false</span>);</div><div class="line"></div><div class="line">                    ds.setTextSize(<span class="number">30.0f</span>);</div><div class="line"></div><div class="line">                &#125;</div><div class="line"></div><div class="line">            &#125;, start, start + name.length(), Spanned.SPAN_COMPOSING);</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> ssb.append(<span class="string">"赞了您."</span>);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="URLSpan用法"><a href="#URLSpan用法" class="headerlink" title="URLSpan用法"></a>URLSpan用法</h1><p>URLSpan urlSpan = new URLSpan(“tel:10086”);</p>
+<p>URLSpan默认都设置了ClickableSpan，都是可点击的。</p>
+<p>“tel:”:电话</p>
+<p>“mailto:”:邮件</p>
+<p>“http:”:网址</p>
+<p>“sms:”:短信</p>
+<p>“geo:”:地图（需要fq）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 点击电话超链接，拨打电话</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span>  <span class="keyword">void</span> <span class="title">setUrlSpan</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">    SpannableString spannableString = <span class="keyword">new</span> SpannableString(<span class="string">"电话"</span>);</div><div class="line"></div><div class="line">    <span class="keyword">final</span> URLSpan urlSpan = <span class="keyword">new</span> URLSpan(<span class="string">"tel:10086"</span>);</div><div class="line"></div><div class="line">    spannableString.setSpan(urlSpan, <span class="number">0</span>, <span class="number">2</span>, Spanned.SPAN_COMPOSING);</div><div class="line"></div><div class="line">    textView9.setMovementMethod(LinkMovementMethod.getInstance());</div><div class="line"></div><div class="line">    textView9.setText(spannableString);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"></div><div class="line"> * 网址超链接 默认是可点击跳转的</div><div class="line"></div><div class="line"> */</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span>  <span class="keyword">void</span> <span class="title">setUrlSpan2</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">    SpannableString spannableString = <span class="keyword">new</span> SpannableString(<span class="string">"网址"</span>);</div><div class="line"></div><div class="line">    <span class="keyword">final</span> URLSpan urlSpan2 = <span class="keyword">new</span> URLSpan(<span class="string">"http://www.csdn.net"</span>);</div><div class="line"></div><div class="line">    spannableString.setSpan(urlSpan2, <span class="number">0</span>, <span class="number">2</span>, Spanned.SPAN_COMPOSING);</div><div class="line"></div><div class="line">    textView10.setMovementMethod(LinkMovementMethod.getInstance());</div><div class="line"></div><div class="line">    textView10.setText(spannableString);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/06/20/Spannable实现富文本/" class="archive-article-date">
+  	<time datetime="2016-06-20T14:08:07.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-06-20</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/富文本/">富文本</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/Android/">Android</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2016/06/21/无题/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          原博客丢了，重新开始吧
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/06/06/实现ViewPager懒加载的三种方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">实现ViewPager懒加载的三种方法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 AnswerZhao
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/"
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+      <li data-hook="tools-section-friends"><span class="text">友链</span><i class="icon-link"></i></li>
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/ViewPager/" style="font-size: 10px;">ViewPager</a> <a href="/tags/adb/" style="font-size: 10px;">adb</a> <a href="/tags/bugs/" style="font-size: 10px;">bugs</a> <a href="/tags/emoj/" style="font-size: 10px;">emoj</a> <a href="/tags/富文本/" style="font-size: 20px;">富文本</a> <a href="/tags/折腾/" style="font-size: 10px;">折腾</a>
+    			</div>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends">
+  		
+  			<div class="friends-wrap" id="js-friends">
+  			
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">友情链接1</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">友情链接2</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">友情链接3</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">友情链接4</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">友情链接5</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">友情链接6</a>
+  	        
+  	        </div>
+  		
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>
