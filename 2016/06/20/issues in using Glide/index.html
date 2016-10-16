@@ -3,18 +3,41 @@
 <head>
   <meta charset="utf-8">
   
-  <title>mac下adb环境配置和常用adb命令 | AnswerZhao的登山之旅</title>
+  <title>Glide使用中的踩坑和填坑 | AnswerZhao的登山之旅</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="mac下adb环境的配置，及在Android开发和调试中常用的adb命令，在此收集整理以作参考备用。">
+  <meta name="description" content="在使用Glide的过程中，遇到不少问题，如下：  
+
+加载本地国际化图片资源时出现错乱。
+加载Gif图时显示奇慢。
+Glide加载图片的ImageView不能设置tag。
+使用CircleImageView时图片显示不正常。
+
+本文，对遇到的这些问题进行了分析和总结。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mac下adb环境配置和常用adb命令">
-<meta property="og:url" content="http://answerzhao.github.io/2016/09/15/mac下adb环境配置和常用adb命令/index.html">
+<meta property="og:title" content="Glide使用中的踩坑和填坑">
+<meta property="og:url" content="http://answerzhao.github.io/2016/06/20/issues in using Glide/index.html">
 <meta property="og:site_name" content="AnswerZhao的登山之旅">
-<meta property="og:description" content="mac下adb环境的配置，及在Android开发和调试中常用的adb命令，在此收集整理以作参考备用。">
-<meta property="og:updated_time" content="2016-09-15T08:46:45.000Z">
+<meta property="og:description" content="在使用Glide的过程中，遇到不少问题，如下：  
+
+加载本地国际化图片资源时出现错乱。
+加载Gif图时显示奇慢。
+Glide加载图片的ImageView不能设置tag。
+使用CircleImageView时图片显示不正常。
+
+本文，对遇到的这些问题进行了分析和总结。">
+<meta property="og:image" content="https://raw.githubusercontent.com/bumptech/glide/master/static/glide_logo.png">
+<meta property="og:updated_time" content="2016-10-16T06:06:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mac下adb环境配置和常用adb命令">
-<meta name="twitter:description" content="mac下adb环境的配置，及在Android开发和调试中常用的adb命令，在此收集整理以作参考备用。">
+<meta name="twitter:title" content="Glide使用中的踩坑和填坑">
+<meta name="twitter:description" content="在使用Glide的过程中，遇到不少问题，如下：  
+
+加载本地国际化图片资源时出现错乱。
+加载Gif图时显示奇慢。
+Glide加载图片的ImageView不能设置tag。
+使用CircleImageView时图片显示不正常。
+
+本文，对遇到的这些问题进行了分析和总结。">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/bumptech/glide/master/static/glide_logo.png">
   
     <link rel="alternative" href="/atom.xml" title="AnswerZhao的登山之旅" type="application/atom+xml">
   
@@ -227,11 +250,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-mac下adb环境配置和常用adb命令" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-issues in using Glide" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/09/15/mac下adb环境配置和常用adb命令/" class="article-date">
-      <time datetime="2016-09-15T08:38:15.000Z" itemprop="datePublished">2016-09-15</time>
+      <a href="/2016/06/20/issues in using Glide/" class="article-date">
+      <time datetime="2016-06-20T14:08:07.000Z" itemprop="datePublished">2016-06-20</time>
 </a>
     </div>
   
@@ -244,7 +267,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      mac下adb环境配置和常用adb命令
+      Glide使用中的踩坑和填坑
     </h1>
   
 
@@ -259,7 +282,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/adb/">adb</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Glide/">Glide</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -269,105 +292,67 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>mac下adb环境的配置，及在Android开发和调试中常用的adb命令，在此收集整理以作参考备用。</p>
+        <p><img src="https://raw.githubusercontent.com/bumptech/glide/master/static/glide_logo.png" alt=""></p>
+<p>在使用Glide的过程中，遇到不少问题，如下：  </p>
+<ol>
+<li>加载本地国际化图片资源时出现错乱。</li>
+<li>加载Gif图时显示奇慢。</li>
+<li>Glide加载图片的ImageView不能设置tag。</li>
+<li>使用CircleImageView时图片显示不正常。</li>
+</ol>
+<p>本文，对遇到的这些问题进行了分析和总结。</p>
 <ul>
 <li><a id="more"></a>
 </li>
 </ul>
-<h1 id="adb命令配置"><a href="#adb命令配置" class="headerlink" title="adb命令配置"></a>adb命令配置</h1><h3 id="1-在命令行下，进入用户目录"><a href="#1-在命令行下，进入用户目录" class="headerlink" title="1 在命令行下，进入用户目录"></a>1 在命令行下，进入用户目录</h3><blockquote>
-<p>cd $HOME</p>
-</blockquote>
-<h3 id="2-bash-profile文件"><a href="#2-bash-profile文件" class="headerlink" title="2 .bash_profile文件"></a>2 .bash_profile文件</h3><p>输入下行命令获取当前文件列表：</p>
+<p><a href="https://github.com/bumptech/glide" target="_blank" rel="external">Glide</a>是Google的一个图片加载的优秀开源库。其几大特点：</p>
 <blockquote>
-<p>ls -al</p>
+<ol>
+<li>通过with()参数传入Activity/Fragment，实现图片加载和Activity/Fragment的生命周期联动，即onPause即停止加载，onResume继续下载。</li>
+<li>专门针对列表加载进行了优化，不用担心复用convertView引起图片错位问题的出现。</li>
+<li>支持gif图，支持gif图，不用再额外添加gif的支持库。</li>
+<li>图片质量。图片质量参数默认采用2bytes/pixel的Bitmap.Config.RGB_565，如果对图片质量要求高，可通过自定义GlideModule来实现4bytes/pixel高质量的ARGB_8888。</li>
+<li>智能的内存开销优化。Glide每次加载都会自动计算出ImageView的大小和所需要的显示尺寸，而不是将全尺寸的图片加载至内存，优化内存占用。</li>
+<li>智能的磁盘缓存，加载显示快。Picasso每次加载都是全尺寸的图片，所有在列表快速滑动时，加载速度会较慢；但是Glide可以设置磁盘缓存策略DiskCacheStrategy.ALL，即缓存全尺寸又缓存其他尺寸，使得列表中快速回滚时图片可以迅速加载显示。</li>
+<li>可以直接加载本地资源图片，比直接设置src更省内存。</li>
+<li>链式调用，简单到没有学习成本。</li>
+<li>库体积小啊。</li>
+</ol>
 </blockquote>
-<p>查看文件列表，如果没有.bash_profile文件，执行以下命令新建：</p>
-<blockquote>
-<p>touch .bash_profile</p>
-</blockquote>
-<p>如果文件已经存在，则直接执行第3步。</p>
-<h3 id="3-打开-bash-profile文件"><a href="#3-打开-bash-profile文件" class="headerlink" title="3 打开.bash_profile文件"></a>3 打开.bash_profile文件</h3><p>执行下行命令打开文件</p>
-<blockquote>
-<p>open -e .bash_profile</p>
-</blockquote>
-<p>打开文件后，添加sdk的安装路径，如果你是安装的Android Studio而且没有手动去变换路径的话，直接复制下面两行命令后将用户名改为自己电脑的即可。如果自己修改了路径，则找到/Android/sdk/platform-tools和/Android/sdk/tools的路径，替换即可。</p>
-<blockquote>
-<p>export PATH=${PATH}:/Users/用户名/Library/Android/sdk/platform-tools<br>export PATH=${PATH}:/Users/用户名/Library/Android/sdk/tools</p>
-</blockquote>
-<h3 id="4-更新刚配置的环境变量"><a href="#4-更新刚配置的环境变量" class="headerlink" title="4 更新刚配置的环境变量"></a>4 更新刚配置的环境变量</h3><blockquote>
-<p>source .bash_profile</p>
-</blockquote>
-<h3 id="5-执行adb-version查看结果"><a href="#5-执行adb-version查看结果" class="headerlink" title="5 执行adb version查看结果"></a>5 执行adb version查看结果</h3><p>显示adb版本号即为设置成功</p>
-<blockquote>
-<p>Android Debug Bridge version 1.0.36<br>Revision 8f855a3d9b35-android</p>
-</blockquote>
-<h1 id="常用的adb命令"><a href="#常用的adb命令" class="headerlink" title="常用的adb命令"></a>常用的adb命令</h1><p>以下为Android开发和测试中常用的一些adb命令，整理在此，以便使用。</p>
-<h3 id="查看设备命令"><a href="#查看设备命令" class="headerlink" title="查看设备命令"></a>查看设备命令</h3><ul>
-<li>adb devices , 获取设备列表及设备状态</li>
-<li><p>adb get-state, 获取设备的连接状态   </p>
-<blockquote>
-<p>device: 设备正常连接<br>offline: 连接异常<br>unknown: 无连接设备</p>
-</blockquote>
-</li>
+<p>为啥不用其他的图片加载开源库呢？</p>
+<ul>
+<li>Fresco. 很牛逼，加载据说是最快的，但是体积太大。</li>
+<li>Picasso. 内存占用大，加载较慢。</li>
+<li>UImageLoader. 配置参数多多。<br>但是…..他们都不支持Gif啊，还是选我大Glide吧，而且Glide在绝大多数应用场景中已经够用和优秀。</li>
 </ul>
-<h3 id="开启和关闭命令"><a href="#开启和关闭命令" class="headerlink" title="开启和关闭命令"></a>开启和关闭命令</h3><ul>
-<li><p>adb kill-server , adb start-server, 开启adb服务和关闭adb服务</p>
+<p>下面就说说在项目实际使用中遇到的一些坑，和对应的解决方案，正文开始。</p>
+<h2 id="踩坑与填坑"><a href="#踩坑与填坑" class="headerlink" title="踩坑与填坑"></a>踩坑与填坑</h2><h3 id="Glide加载本地国际化图片资源时出现错乱"><a href="#Glide加载本地国际化图片资源时出现错乱" class="headerlink" title="Glide加载本地国际化图片资源时出现错乱"></a>Glide加载本地国际化图片资源时出现错乱</h3><p><strong>坑</strong><br>为了批量加载大图片避免oom，采用Glide加载本地图片资源，但是在切换应用语言时，对应的国际化的图片资源却没自动切换。纳尼？莫非Glide不支持国际化资源加载，不可能啊，在不同语言下刚安装第一进入时加载都是正确的呀！哪个地方出问题了呢？  </p>
+<p><strong>分析</strong><br>经过分析测试，把问题定位在磁盘缓存上。Glide在不设置DiskCacheStrategy时默认采用DiskCacheStrategy.RESULT的缓存策略，即存储此次加载的结果，那么，在切换语言时，再次加载图片时，默认是从缓存中读取的，而不是新的资源路径，那么就会造成这次加载的和上次加载的一样，结果就是，切换了语言环境，但是图片资源无变化。  </p>
+<p><strong>解决方案</strong><br>只需修改其磁盘缓存策略即可，不做磁盘缓存，即设置磁盘缓存策略为NONE，代码实现为：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Glide.with(context).*.*.diskCacheStrategy(DiskCacheStrategy.NONE).into(imageView);</div></pre></td></tr></table></figure>
 <blockquote>
-<p>应用场景：连接异常，即连接的设备未响应时，一般先kill-server,再start-server。</p>
+<p>建议：使用Glide加载本地图片时最好将磁盘缓存策略设置为NONE，首先，既然是本地资源，根本无需再做本地缓存了，其次避免出现类似国际化资源出现的问题。</p>
 </blockquote>
-</li>
-</ul>
-<h3 id="安装和卸载命令"><a href="#安装和卸载命令" class="headerlink" title="安装和卸载命令"></a>安装和卸载命令</h3><ul>
-<li><p>adb install xxx.apk , 安装一个apk</p>
-<blockquote>
-<p>xxx.apk 需要为绝对路径，实际操作中直接将apk拖到终端中即可。</p>
-</blockquote>
-</li>
-<li><p>adb install -r xxx.apk</p>
-<blockquote>
-<p>重新安装此apk，但是保留原有的数据和缓存文件</p>
-</blockquote>
-</li>
-<li><p>adb install -s xxx.apk</p>
-<blockquote>
-<p>安装apk到sd卡中，默认为安装到机身内存中</p>
-</blockquote>
-</li>
-<li><p>adb uninstall (-k) <package-name></package-name></p>
-<blockquote>
-<p>卸载apk(-k表示保留数据和缓存文件)</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="清除应用数据和缓存"><a href="#清除应用数据和缓存" class="headerlink" title="清除应用数据和缓存"></a>清除应用数据和缓存</h3><ul>
-<li>adb shell pm clear <package-name></package-name></li>
-</ul>
-<h3 id="强制停止应用"><a href="#强制停止应用" class="headerlink" title="强制停止应用"></a>强制停止应用</h3><ul>
-<li>adb shell am force-stop <package-name></package-name></li>
-</ul>
-<h3 id="设备相关"><a href="#设备相关" class="headerlink" title="设备相关"></a>设备相关</h3><ul>
-<li>adb get-serialno  获取序列号</li>
-<li>adb shell getprop ro.product.model 查看设备型号</li>
-<li>adb shell getprop ro.build.version.release 查看Android系统版本</li>
-<li>adb shell wm density 查看屏幕密度</li>
-<li>adb shell wm size 查看屏幕分辨率</li>
-</ul>
-<h3 id="拷入和拷出文件"><a href="#拷入和拷出文件" class="headerlink" title="拷入和拷出文件"></a>拷入和拷出文件</h3><ul>
-<li><p>adb pull 拷出</p>
-<blockquote>
-<p>adb pull sdcard/simple.txt e:\<br>adb pull sdcard/simple.txt e:\rename.txt  重命名文件名</p>
-</blockquote>
-</li>
-<li><p>adb push 拷入</p>
-<blockquote>
-<p>adb push d:\nice.txt sdcard/  拷贝本地文件到手机sd卡</p>
-</blockquote>
-</li>
-</ul>
-<hr>
-<p>本文内容搜集自网络，非原创，若侵权请通知，即刻删除。</p>
-<hr>
-<h4 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h4><p><a href="https://github.com/mzlogin/awesome-adb" target="_blank" rel="external">ADB 用法大全</a><br><a href="https://testerhome.com/topics/2565" target="_blank" rel="external">Android 常用 adb 命令总结</a></p>
+<h3 id="Glide加载Gif图片时显示奇慢"><a href="#Glide加载Gif图片时显示奇慢" class="headerlink" title="Glide加载Gif图片时显示奇慢"></a>Glide加载Gif图片时显示奇慢</h3><p><strong>坑：</strong><br>在利用Glide加载Gif图片时，采用和加载.png/.jpg一样的调用方式时，发现Gif图的加载速度超级慢啊，而应用中Gif图有时会有连续的好几张，这时就一直loading，真烦人。  </p>
+<p><strong>分析：</strong><br>在搜索后，准备到Glide下提个issue，发现已经有人提过，而且作者也给出了<a href="https://github.com/bumptech/glide/issues/1059" target="_blank" rel="external">解决方案</a>，加载Gif时除了调用asGif()方法外，还需特别设置缓存策略(又是缓存策略的问题，可见这块是个烦人的点啊)，需要将缓存策略设置为SOURCE或者NONE，即设置为缓存原图资源或者不做缓存。猜想是，在做ALL或者RESULT的缓存策略时，需要转换处理Gif图，造成较耗资源，显示缓慢。</p>
+<p><strong>解决方案：</strong><br>三点：asGIf(), DiskCacheStrategy.SOURCE/NONE, dontAnimate(), dontAnimate()为个人建议，实测中发现去掉动画会显示更快。<br>在实际项目中可以这样写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">if(picUrl.endsWith(&quot;.gif&quot;))&#123;</div><div class="line">    Glide.with(resultFragment)</div><div class="line">            .load(picUrl)</div><div class="line">            .asGif()</div><div class="line">            .override(width,height)</div><div class="line">            .placeholder(placeholderImg)</div><div class="line">            .error(errorImg)</div><div class="line">            .dontAnimate()</div><div class="line">            .centerCrop()</div><div class="line">            .diskCacheStrategy(DiskCacheStrategy.SOURCE)// DiskCacheStrategy.NONE</div><div class="line">            .into(ivPic);</div><div class="line">&#125;else&#123;</div><div class="line">    Glide.with(resultFragment)</div><div class="line">            .load(picUrl)</div><div class="line">            .override(width,height)</div><div class="line">            .placeholder(placeholderImg)</div><div class="line">            .error(errorImg)</div><div class="line">            .crossFade()</div><div class="line">            .centerCrop()</div><div class="line">            .into(ivPic);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Glide加载的ImageView设置tag就报错"><a href="#Glide加载的ImageView设置tag就报错" class="headerlink" title="Glide加载的ImageView设置tag就报错"></a>Glide加载的ImageView设置tag就报错</h3><p><strong>坑：</strong><br>利用Glide加载图片的ImageView，在给其设置tag时会出现报错：<font color="red">Java.lang.IllegalArgumentException: You must not call setTag() on a view Glide is targeting </font>。这是因为Glide为了防止在列表中出现的错乱情况，默认给Glide加载的对象(ImageView)设置了tag，就像我们早期使用图片加载时自己手动做的tag处理防止图片加载错位。<br><strong>解决方案：</strong><br>以下三种方案，参考自博文<a href="http://www.jianshu.com/p/4a3177b57949" target="_blank" rel="external">Glide 一个专注于平滑滚动的图片加载和缓存库</a><br>方案一：<br>最简单方便，使用setTag(int,object)方法设置tag。  </p>
+<p>方案二：<br>(1) 先实现GlideMoudle接口，全局设置ViewTaget的tagId</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class MyGlideMoudle implements GlideModule&#123;</div><div class="line">    @Override</div><div class="line">    public void applyOptions(Context context, GlideBuilder builder) &#123;</div><div class="line">        ViewTarget.setTagId(R.id.glide_tag_id);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void registerComponents(Context context, Glide glide) &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>(2) 在ids.xml下添加id</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;item name=&quot;glide_tag_id&quot; type=&quot;id&quot;/&gt;</div></pre></td></tr></table></figure>
+<p>(3) 在AndroidManifest.xml文件里面添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;meta-data</div><div class="line">    android:name=&quot;com.yourpackagename.MyGlideMoudle&quot;</div><div class="line">    android:value=&quot;GlideModule&quot; /&gt;</div></pre></td></tr></table></figure>
+<p>方案三：<br>写一个继承自ImageViewTaget的类，复写它的get/setRequest方法。具体实现参考<a href="http://www.jianshu.com/p/4a3177b57949" target="_blank" rel="external">博文</a>,再次不再贴出。</p>
+<h3 id="使用CircleImageView加载图片时显示不正常"><a href="#使用CircleImageView加载图片时显示不正常" class="headerlink" title="使用CircleImageView加载图片时显示不正常"></a>使用CircleImageView加载图片时显示不正常</h3><p><strong>坑</strong>：<br>在使用CircleImageView实现圆形头像时，如果Glide设置了placeHolder，加载时会出现加载不出图片的情况。</p>
+<p><strong>分析</strong>:<br>CircleImageView引起的与占位图和显示动画的冲突问题。</p>
+<p><strong>解决方案：</strong><br>方案一： 不设置placeholder占位图。<br>方案二： 使用Glide的Transformation自己设置圆形图片，具体参考这个<a href="http://stackoverflow.com/questions/25278821/how-do-rounded-image-with-glide-library" target="_blank" rel="external">How do rounded image with Glide library?</a>。<br>方案三： 去掉Glide加载的默认动画，即调用dontAnimate()方法。</p>
+<h1 id="延伸阅读"><a href="#延伸阅读" class="headerlink" title="延伸阅读"></a>延伸阅读</h1><ol>
+<li><a href="https://inthecheesefactory.com/blog/get-to-know-glide-recommended-by-google/en" target="_blank" rel="external">Introduction to Glide</a>  </li>
+<li><a href="http://jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0327/2650.html" target="_blank" rel="external">Google推荐的图片加载库Glide介绍</a>  </li>
+<li><a href="http://www.jianshu.com/p/4a3177b57949" target="_blank" rel="external">Glide 一个专注于平滑滚动的图片加载和缓存库</a></li>
+</ol>
 
       
     </div>
@@ -376,13 +361,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/09/15/mac下adb环境配置和常用adb命令/">mac下adb环境配置和常用adb命令</a></p>
+        <p><span>本文标题:</span><a href="/2016/06/20/issues in using Glide/">Glide使用中的踩坑和填坑</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 AnswerZhao 的个人博客">AnswerZhao</a></p>
-        <p><span>发布时间:</span>2016年09月15日 - 16时38分</p>
-        <p><span>最后更新:</span>2016年09月15日 - 16时46分</p>
+        <p><span>发布时间:</span>2016年06月20日 - 22时08分</p>
+        <p><span>最后更新:</span>2016年10月16日 - 14时06分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/09/15/mac下adb环境配置和常用adb命令/" title="mac下adb环境配置和常用adb命令">http://answerzhao.github.io/2016/09/15/mac下adb环境配置和常用adb命令/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://answerzhao.github.io/2016/09/15/mac下adb环境配置和常用adb命令/　　作者: AnswerZhao" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/06/20/issues in using Glide/" title="Glide使用中的踩坑和填坑">http://answerzhao.github.io/2016/06/20/issues in using Glide/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://answerzhao.github.io/2016/06/20/issues in using Glide/　　作者: AnswerZhao" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -395,9 +380,18 @@
 
 <nav id="article-nav">
   
+    <a href="/2016/06/20/Spannable实现富文本/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Spannable实现TextView/EditText的富文本显示
+        
+      </div>
+    </a>
   
-    <a href="/2016/07/01/富文本显示时的emoj或图片和文字对齐的实现/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">解决TextView富文本显示时emoj或图片和文字不对齐的问题</div>
+  
+    <a href="/2016/06/06/实现ViewPager懒加载的三种方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">实现ViewPager懒加载的三种方法</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -408,7 +402,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#adb命令配置"><span class="toc-number">1.</span> <span class="toc-text">adb命令配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-在命令行下，进入用户目录"><span class="toc-number">1.0.1.</span> <span class="toc-text">1 在命令行下，进入用户目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-bash-profile文件"><span class="toc-number">1.0.2.</span> <span class="toc-text">2 .bash_profile文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-打开-bash-profile文件"><span class="toc-number">1.0.3.</span> <span class="toc-text">3 打开.bash_profile文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-更新刚配置的环境变量"><span class="toc-number">1.0.4.</span> <span class="toc-text">4 更新刚配置的环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-执行adb-version查看结果"><span class="toc-number">1.0.5.</span> <span class="toc-text">5 执行adb version查看结果</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常用的adb命令"><span class="toc-number">2.</span> <span class="toc-text">常用的adb命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看设备命令"><span class="toc-number">2.0.1.</span> <span class="toc-text">查看设备命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开启和关闭命令"><span class="toc-number">2.0.2.</span> <span class="toc-text">开启和关闭命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装和卸载命令"><span class="toc-number">2.0.3.</span> <span class="toc-text">安装和卸载命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#清除应用数据和缓存"><span class="toc-number">2.0.4.</span> <span class="toc-text">清除应用数据和缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#强制停止应用"><span class="toc-number">2.0.5.</span> <span class="toc-text">强制停止应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设备相关"><span class="toc-number">2.0.6.</span> <span class="toc-text">设备相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拷入和拷出文件"><span class="toc-number">2.0.7.</span> <span class="toc-text">拷入和拷出文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#参考博客"><span class="toc-number">2.0.7.1.</span> <span class="toc-text">参考博客</span></a></li></ol></li></ol></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#踩坑与填坑"><span class="toc-number">1.</span> <span class="toc-text">踩坑与填坑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Glide加载本地国际化图片资源时出现错乱"><span class="toc-number">1.1.</span> <span class="toc-text">Glide加载本地国际化图片资源时出现错乱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Glide加载Gif图片时显示奇慢"><span class="toc-number">1.2.</span> <span class="toc-text">Glide加载Gif图片时显示奇慢</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Glide加载的ImageView设置tag就报错"><span class="toc-number">1.3.</span> <span class="toc-text">Glide加载的ImageView设置tag就报错</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用CircleImageView加载图片时显示不正常"><span class="toc-number">1.4.</span> <span class="toc-text">使用CircleImageView加载图片时显示不正常</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#延伸阅读"><span class="toc-number"></span> <span class="toc-text">延伸阅读</span></a>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -456,7 +450,7 @@
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/09/15/mac下adb环境配置和常用adb命令/" data-title="mac下adb环境配置和常用adb命令" data-url="http://answerzhao.github.io/2016/09/15/mac下adb环境配置和常用adb命令/"></div>
+    <div class="ds-thread" data-thread-key="2016/06/20/issues in using Glide/" data-title="Glide使用中的踩坑和填坑" data-url="http://answerzhao.github.io/2016/06/20/issues in using Glide/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -479,11 +473,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2016/06/20/Spannable实现富文本/" title="上一篇: Spannable实现TextView/EditText的富文本显示">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2016/07/01/富文本显示时的emoj或图片和文字对齐的实现/" title="下一篇: 解决TextView富文本显示时emoj或图片和文字不对齐的问题">
+            <a href="/2016/06/06/实现ViewPager懒加载的三种方法/" title="下一篇: 实现ViewPager懒加载的三种方法">
                 <i class="fa fa-angle-right"></i>
             </a>
         
