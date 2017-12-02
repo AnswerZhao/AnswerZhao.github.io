@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android中音视频合成方案分析 | AnswerZhao的登山之旅</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Android下音视频合成，在当前调研方案中主要有三大类方法：MediaMux硬解码，mp4parser，FFmepg。三种方法均可实现，但是也有不同的局限和问题，先将实现和问题记录于此，便于之后的总结学习。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android中音视频合成方案分析">
+<meta property="og:url" content="http://answerzhao.github.io/2017/03/11/Android中音视频合成方案分析/index.html">
+<meta property="og:site_name" content="AnswerZhao的登山之旅">
+<meta property="og:description" content="Android下音视频合成，在当前调研方案中主要有三大类方法：MediaMux硬解码，mp4parser，FFmepg。三种方法均可实现，但是也有不同的局限和问题，先将实现和问题记录于此，便于之后的总结学习。">
+<meta property="og:updated_time" content="2017-12-02T07:41:43.819Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android中音视频合成方案分析">
+<meta name="twitter:description" content="Android下音视频合成，在当前调研方案中主要有三大类方法：MediaMux硬解码，mp4parser，FFmepg。三种方法均可实现，但是也有不同的局限和问题，先将实现和问题记录于此，便于之后的总结学习。">
+  
+    <link rel="alternative" href="/atom.xml" title="AnswerZhao的登山之旅" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar.png" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/">AnswerZhao</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">万物有规律，万事有方法</p>
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/categories/Android">Android</a></li>
+                        
+                            <li><a href="/categories/随笔">随笔</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/AnswerZhao" title="github">github</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/AS/" style="font-size: 10px;">AS</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Glide/" style="font-size: 10px;">Glide</a> <a href="/tags/ViewPager/" style="font-size: 10px;">ViewPager</a> <a href="/tags/adb/" style="font-size: 10px;">adb</a> <a href="/tags/bugs/" style="font-size: 10px;">bugs</a> <a href="/tags/emoj/" style="font-size: 10px;">emoj</a> <a href="/tags/多媒体/" style="font-size: 15px;">多媒体</a> <a href="/tags/富文本/" style="font-size: 20px;">富文本</a> <a href="/tags/折腾/" style="font-size: 10px;">折腾</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/guolin_blog?viewmode=contents">Guolin</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/lmj623565791">Hongyang</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://stormzhang.com/">StormZhang</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.piasy.com/">清华披萨</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.nimbledroid.com/">nimbledroid</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/GeniusVJR/LearningNotes">LearningNotes</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/googlesamples/android-architecture">Architecture</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">有点痴，有点二，有点理想，有点美好。</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">AnswerZhao</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">AnswerZhao</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">万物有规律，万事有方法</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/categories/Android">Android</a></li>
+                
+                    <li><a href="/categories/随笔">随笔</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/AnswerZhao" title="github">github</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-Android中音视频合成方案分析" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/11/Android中音视频合成方案分析/" class="article-date">
+      <time datetime="2017-03-11T12:30:43.000Z" itemprop="datePublished">2017-03-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android中音视频合成方案分析
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多媒体/">多媒体</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>Android下音视频合成，在当前调研方案中主要有三大类方法：MediaMux硬解码，mp4parser，FFmepg。三种方法均可实现，但是也有不同的局限和问题，先将实现和问题记录于此，便于之后的总结学习。</p>
+<ul>
+<li><a id="more"></a>
+</li>
+</ul>
+<h3 id="方法一（Fail）"><a href="#方法一（Fail）" class="headerlink" title="方法一（Fail）"></a>方法一（Fail）</h3><p>利用MediaMux实现音视频的合成。<br>效果：可以实现音视频的合并，利用Android原生的VideoView和SurfaceView播放正常，大部分的播放器也播放正常，但是，但是，在上传Youtube就会出现问题：音频不连续，分析主要是上传Youtube时会被再次的压缩，可能在压缩的过程中出现音频的帧率出现问题。<br>分析：在MediaCodec.BufferInfo的处理中，时间戳presentationTimeUs出现问题，导致Youtube的压缩造成音频的紊乱。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">muxVideoAndAudio</span><span class="params">(String videoPath, String audioPath, String muxPath)</span> </span>&#123;</div><div class="line">       <span class="keyword">try</span> &#123;</div><div class="line">           MediaExtractor videoExtractor = <span class="keyword">new</span> MediaExtractor();</div><div class="line">           videoExtractor.setDataSource(videoPath);</div><div class="line">           MediaFormat videoFormat = <span class="keyword">null</span>;</div><div class="line">           <span class="keyword">int</span> videoTrackIndex = -<span class="number">1</span>;</div><div class="line">           <span class="keyword">int</span> videoTrackCount = videoExtractor.getTrackCount();</div><div class="line">           <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; videoTrackCount; i++) &#123;</div><div class="line">               videoFormat = videoExtractor.getTrackFormat(i);</div><div class="line">               String mimeType = videoFormat.getString(MediaFormat.KEY_MIME);</div><div class="line">               <span class="keyword">if</span> (mimeType.startsWith(<span class="string">"video/"</span>)) &#123;</div><div class="line">                   videoTrackIndex = i;</div><div class="line">                   <span class="keyword">break</span>;</div><div class="line">               &#125;</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           MediaExtractor audioExtractor = <span class="keyword">new</span> MediaExtractor();</div><div class="line">           audioExtractor.setDataSource(audioPath);</div><div class="line">           MediaFormat audioFormat = <span class="keyword">null</span>;</div><div class="line">           <span class="keyword">int</span> audioTrackIndex = -<span class="number">1</span>;</div><div class="line">           <span class="keyword">int</span> audioTrackCount = audioExtractor.getTrackCount();</div><div class="line">           <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; audioTrackCount; i++) &#123;</div><div class="line">               audioFormat = audioExtractor.getTrackFormat(i);</div><div class="line">               String mimeType = audioFormat.getString(MediaFormat.KEY_MIME);</div><div class="line">               <span class="keyword">if</span> (mimeType.startsWith(<span class="string">"audio/"</span>)) &#123;</div><div class="line">                   audioTrackIndex = i;</div><div class="line">                   <span class="keyword">break</span>;</div><div class="line">               &#125;</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           videoExtractor.selectTrack(videoTrackIndex);</div><div class="line">           audioExtractor.selectTrack(audioTrackIndex);</div><div class="line"></div><div class="line">           MediaCodec.BufferInfo videoBufferInfo = <span class="keyword">new</span> MediaCodec.BufferInfo();</div><div class="line">           MediaCodec.BufferInfo audioBufferInfo = <span class="keyword">new</span> MediaCodec.BufferInfo();</div><div class="line"></div><div class="line">           MediaMuxer mediaMuxer = <span class="keyword">new</span> MediaMuxer(muxPath, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);</div><div class="line">           <span class="keyword">int</span> writeVideoTrackIndex = mediaMuxer.addTrack(videoFormat);</div><div class="line">           <span class="keyword">int</span> writeAudioTrackIndex = mediaMuxer.addTrack(audioFormat);</div><div class="line">           mediaMuxer.start();</div><div class="line"></div><div class="line">           ByteBuffer byteBuffer = ByteBuffer.allocate(<span class="number">500</span> * <span class="number">1024</span>);</div><div class="line">           <span class="keyword">long</span> sampleTime = <span class="number">0</span>;</div><div class="line">           &#123;</div><div class="line">               videoExtractor.readSampleData(byteBuffer, <span class="number">0</span>);</div><div class="line">               <span class="keyword">if</span> (videoExtractor.getSampleFlags() == MediaExtractor.SAMPLE_FLAG_SYNC) &#123;</div><div class="line">                   videoExtractor.advance();</div><div class="line">               &#125;</div><div class="line">               videoExtractor.readSampleData(byteBuffer, <span class="number">0</span>);</div><div class="line">               <span class="keyword">long</span> secondTime = videoExtractor.getSampleTime();</div><div class="line">               videoExtractor.advance();</div><div class="line">               <span class="keyword">long</span> thirdTime = videoExtractor.getSampleTime();</div><div class="line">               sampleTime = Math.abs(thirdTime - secondTime);</div><div class="line">           &#125;</div><div class="line">           videoExtractor.unselectTrack(videoTrackIndex);</div><div class="line">           videoExtractor.selectTrack(videoTrackIndex);</div><div class="line"></div><div class="line">           <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</div><div class="line">               <span class="keyword">int</span> readVideoSampleSize = videoExtractor.readSampleData(byteBuffer, <span class="number">0</span>);</div><div class="line">               <span class="keyword">if</span> (readVideoSampleSize &lt; <span class="number">0</span>) &#123;</div><div class="line">                   <span class="keyword">break</span>;</div><div class="line">               &#125;</div><div class="line">               videoBufferInfo.size = readVideoSampleSize;</div><div class="line">               videoBufferInfo.presentationTimeUs += sampleTime;</div><div class="line">               videoBufferInfo.offset = <span class="number">0</span>;</div><div class="line">               <span class="comment">//noinspection WrongConstant</span></div><div class="line">               videoBufferInfo.flags = MediaCodec.BUFFER_FLAG_SYNC_FRAME;<span class="comment">//videoExtractor.getSampleFlags()</span></div><div class="line">               mediaMuxer.writeSampleData(writeVideoTrackIndex, byteBuffer, videoBufferInfo);</div><div class="line">               videoExtractor.advance();</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</div><div class="line">               <span class="keyword">int</span> readAudioSampleSize = audioExtractor.readSampleData(byteBuffer, <span class="number">0</span>);</div><div class="line">               <span class="keyword">if</span> (readAudioSampleSize &lt; <span class="number">0</span>) &#123;</div><div class="line">                   <span class="keyword">break</span>;</div><div class="line">               &#125;</div><div class="line"></div><div class="line">               audioBufferInfo.size = readAudioSampleSize;</div><div class="line">               audioBufferInfo.presentationTimeUs += sampleTime;</div><div class="line">               audioBufferInfo.offset = <span class="number">0</span>;</div><div class="line">               <span class="comment">//noinspection WrongConstant</span></div><div class="line">               audioBufferInfo.flags = MediaCodec.BUFFER_FLAG_SYNC_FRAME;<span class="comment">// videoExtractor.getSampleFlags()</span></div><div class="line">               mediaMuxer.writeSampleData(writeAudioTrackIndex, byteBuffer, audioBufferInfo);</div><div class="line">               audioExtractor.advance();</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           mediaMuxer.stop();</div><div class="line">           mediaMuxer.release();</div><div class="line">           videoExtractor.release();</div><div class="line">           audioExtractor.release();</div><div class="line">       &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">           e.printStackTrace();</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h3 id="方法二（Success）"><a href="#方法二（Success）" class="headerlink" title="方法二（Success）"></a>方法二（Success）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">muxVideoAudio</span><span class="params">(String videoFilePath, String audioFilePath, String outputFile)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line"></div><div class="line">            MediaExtractor videoExtractor = <span class="keyword">new</span> MediaExtractor();</div><div class="line">            videoExtractor.setDataSource(videoFilePath);</div><div class="line"></div><div class="line">            MediaExtractor audioExtractor = <span class="keyword">new</span> MediaExtractor();</div><div class="line">            audioExtractor.setDataSource(audioFilePath);</div><div class="line"></div><div class="line">            MediaMuxer muxer = <span class="keyword">new</span> MediaMuxer(outputFile, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);</div><div class="line"></div><div class="line">            videoExtractor.selectTrack(<span class="number">0</span>);</div><div class="line">            MediaFormat videoFormat = videoExtractor.getTrackFormat(<span class="number">0</span>);</div><div class="line">            <span class="keyword">int</span> videoTrack = muxer.addTrack(videoFormat);</div><div class="line"></div><div class="line">            audioExtractor.selectTrack(<span class="number">0</span>);</div><div class="line">            MediaFormat audioFormat = audioExtractor.getTrackFormat(<span class="number">0</span>);</div><div class="line">            <span class="keyword">int</span> audioTrack = muxer.addTrack(audioFormat);</div><div class="line"></div><div class="line">            LogUtil.d(TAG, <span class="string">"Video Format "</span> + videoFormat.toString());</div><div class="line">            LogUtil.d(TAG, <span class="string">"Audio Format "</span> + audioFormat.toString());</div><div class="line"></div><div class="line">            <span class="keyword">boolean</span> sawEOS = <span class="keyword">false</span>;</div><div class="line">            <span class="keyword">int</span> frameCount = <span class="number">0</span>;</div><div class="line">            <span class="keyword">int</span> offset = <span class="number">100</span>;</div><div class="line">            <span class="keyword">int</span> sampleSize = <span class="number">256</span> * <span class="number">1024</span>;</div><div class="line"></div><div class="line">            ByteBuffer videoBuf = ByteBuffer.allocate(sampleSize);</div><div class="line">            ByteBuffer audioBuf = ByteBuffer.allocate(sampleSize);</div><div class="line"></div><div class="line">            MediaCodec.BufferInfo videoBufferInfo = <span class="keyword">new</span> MediaCodec.BufferInfo();</div><div class="line">            MediaCodec.BufferInfo audioBufferInfo = <span class="keyword">new</span> MediaCodec.BufferInfo();</div><div class="line"></div><div class="line"></div><div class="line">            videoExtractor.seekTo(<span class="number">0</span>, MediaExtractor.SEEK_TO_CLOSEST_SYNC);</div><div class="line">            audioExtractor.seekTo(<span class="number">0</span>, MediaExtractor.SEEK_TO_CLOSEST_SYNC);</div><div class="line"></div><div class="line">            muxer.start();</div><div class="line"></div><div class="line">            <span class="keyword">while</span> (!sawEOS) &#123;</div><div class="line">                videoBufferInfo.offset = offset;</div><div class="line">                videoBufferInfo.size = videoExtractor.readSampleData(videoBuf, offset);</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (videoBufferInfo.size &lt; <span class="number">0</span> || audioBufferInfo.size &lt; <span class="number">0</span>) &#123;</div><div class="line">                    sawEOS = <span class="keyword">true</span>;</div><div class="line">                    videoBufferInfo.size = <span class="number">0</span>;</div><div class="line"></div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    videoBufferInfo.presentationTimeUs = videoExtractor.getSampleTime();</div><div class="line">                    <span class="comment">//noinspection WrongConstant</span></div><div class="line">                    videoBufferInfo.flags = videoExtractor.getSampleFlags();</div><div class="line">                    muxer.writeSampleData(videoTrack, videoBuf, videoBufferInfo);</div><div class="line">                    videoExtractor.advance();</div><div class="line"></div><div class="line">                    frameCount++;</div><div class="line"></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            <span class="keyword">boolean</span> sawEOS2 = <span class="keyword">false</span>;</div><div class="line">            <span class="keyword">int</span> frameCount2 = <span class="number">0</span>;</div><div class="line">            <span class="keyword">while</span> (!sawEOS2) &#123;</div><div class="line">                frameCount2++;</div><div class="line">                audioBufferInfo.offset = offset;</div><div class="line">                audioBufferInfo.size = audioExtractor.readSampleData(audioBuf, offset);</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (videoBufferInfo.size &lt; <span class="number">0</span> || audioBufferInfo.size &lt; <span class="number">0</span>) &#123;</div><div class="line">                    sawEOS2 = <span class="keyword">true</span>;</div><div class="line">                    audioBufferInfo.size = <span class="number">0</span>;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    audioBufferInfo.presentationTimeUs = audioExtractor.getSampleTime();</div><div class="line">                    <span class="comment">//noinspection WrongConstant</span></div><div class="line">                    audioBufferInfo.flags = audioExtractor.getSampleFlags();</div><div class="line">                    muxer.writeSampleData(audioTrack, audioBuf, audioBufferInfo);</div><div class="line">                    audioExtractor.advance();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            muxer.stop();</div><div class="line">            muxer.release();</div><div class="line">            LogUtil.d(TAG,<span class="string">"Output: "</span>+outputFile);</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            LogUtil.d(TAG, <span class="string">"Mixer Error 1 "</span> + e.getMessage());</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            LogUtil.d(TAG, <span class="string">"Mixer Error 2 "</span> + e.getMessage());</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><p>利用<strong>mp4parser</strong>实现</p>
+<blockquote>
+<p>compile “com.googlecode.mp4parser:isoparser:1.1.21”</p>
+</blockquote>
+<p>问题：上传Youtube压缩后，视频数据丢失严重，大部分就只剩下一秒钟的时长，相当于把视频变成图片了，囧</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div></pre></td><td class="code"><pre><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">mux</span><span class="params">(String videoFile, String audioFile, <span class="keyword">final</span> String outputFile)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (isStopMux) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        Movie video;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            video = MovieCreator.build(videoFile);</div><div class="line">        &#125; <span class="keyword">catch</span> (RuntimeException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Movie audio;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            audio = MovieCreator.build(audioFile);</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125; <span class="keyword">catch</span> (NullPointerException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Track audioTrack = audio.getTracks().get(<span class="number">0</span>);</div><div class="line">        video.addTrack(audioTrack);</div><div class="line"></div><div class="line">        Container out = <span class="keyword">new</span> DefaultMp4Builder().build(video);</div><div class="line"></div><div class="line">        FileOutputStream fos;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            fos = <span class="keyword">new</span> FileOutputStream(outputFile);</div><div class="line">        &#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        BufferedWritableFileByteChannel byteBufferByteChannel = <span class="keyword">new</span></div><div class="line">                BufferedWritableFileByteChannel(fos);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            out.writeContainer(byteBufferByteChannel);</div><div class="line">            byteBufferByteChannel.close();</div><div class="line">            fos.close();</div><div class="line">            <span class="keyword">if</span> (isStopMux) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            runOnUiThread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                    mCustomeProgressDialog.setProgress(<span class="number">100</span>);</div><div class="line">                    goShareActivity(outputFile);</div><div class="line"><span class="comment">//                    FileUtils.insertMediaDB(AddAudiosActivity.this,outputFile);//</span></div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line"></div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            <span class="keyword">if</span> (mCustomeProgressDialog.isShowing()) &#123;</div><div class="line">                mCustomeProgressDialog.dismiss();</div><div class="line">            &#125;</div><div class="line">            ToastUtil.showShort(getString(R.string.process_failed));</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">BufferedWritableFileByteChannel</span> <span class="keyword">implements</span> <span class="title">WritableByteChannel</span> </span>&#123;</div><div class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> BUFFER_CAPACITY = <span class="number">2000000</span>;</div><div class="line"></div><div class="line">        <span class="keyword">private</span> <span class="keyword">boolean</span> isOpen = <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">private</span> <span class="keyword">final</span> OutputStream outputStream;</div><div class="line">        <span class="keyword">private</span> <span class="keyword">final</span> ByteBuffer byteBuffer;</div><div class="line">        <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">byte</span>[] rawBuffer = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_CAPACITY];</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">private</span> <span class="title">BufferedWritableFileByteChannel</span><span class="params">(OutputStream outputStream)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.outputStream = outputStream;</div><div class="line">            <span class="keyword">this</span>.byteBuffer = ByteBuffer.wrap(rawBuffer);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">write</span><span class="params">(ByteBuffer inputBuffer)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">            <span class="keyword">int</span> inputBytes = inputBuffer.remaining();</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (inputBytes &gt; byteBuffer.remaining()) &#123;</div><div class="line">                dumpToFile();</div><div class="line">                byteBuffer.clear();</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (inputBytes &gt; byteBuffer.remaining()) &#123;</div><div class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> BufferOverflowException();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            byteBuffer.put(inputBuffer);</div><div class="line"></div><div class="line">            <span class="keyword">return</span> inputBytes;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isOpen</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> isOpen;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">            dumpToFile();</div><div class="line">            isOpen = <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dumpToFile</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                outputStream.write(rawBuffer, <span class="number">0</span>, byteBuffer.position());</div><div class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="方法四"><a href="#方法四" class="headerlink" title="方法四"></a>方法四</h3><blockquote>
+<p>利用FFmpeg大法</p>
+</blockquote>
+<p><a href="http://stackoverflow.com/questions/24804928/singler-line-ffmpeg-cmd-to-merge-video-audio-and-retain-both-audios" target="_blank" rel="external">Merge Video /Audio and retain both audios</a></p>
+<p>可以实现，兼容性强，但由于是软解码，合并速度很慢，忍受不了，而相应的FFmpeg优化还不太了解，囧…….</p>
+<p><strong>以上，谢谢阅读。</strong></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/03/11/Android中音视频合成方案分析/">Android中音视频合成方案分析</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 AnswerZhao 的个人博客">AnswerZhao</a></p>
+        <p><span>发布时间:</span>2017年03月11日 - 20时30分</p>
+        <p><span>最后更新:</span>2017年12月02日 - 15时41分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/03/11/Android中音视频合成方案分析/" title="Android中音视频合成方案分析">http://answerzhao.github.io/2017/03/11/Android中音视频合成方案分析/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://answerzhao.github.io/2017/03/11/Android中音视频合成方案分析/　　作者: AnswerZhao" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2017/01/10/Error in MediaPlayer and TextureView/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MediaPlayer Error (1,-2147479552), Error (-38,0)</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法一（Fail）"><span class="toc-number">1.</span> <span class="toc-text">方法一（Fail）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法二（Success）"><span class="toc-number">2.</span> <span class="toc-text">方法二（Success）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法三"><span class="toc-number">3.</span> <span class="toc-text">方法三</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法四"><span class="toc-number">4.</span> <span class="toc-text">方法四</span></a></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2017/03/11/Android中音视频合成方案分析/" data-title="Android中音视频合成方案分析" data-url="http://answerzhao.github.io/2017/03/11/Android中音视频合成方案分析/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"answerzhao"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = '/js/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2017/01/10/Error in MediaPlayer and TextureView/" title="下一篇: MediaPlayer Error (1,-2147479552), Error (-38,0)">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/03/11/Android中音视频合成方案分析/">Android中音视频合成方案分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/10/Error in MediaPlayer and TextureView/">MediaPlayer Error (1,-2147479552), Error (-38,0)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/16/issues in using Glide/">Glide使用中的踩坑和填坑</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/03/AndroidStudio快捷之道/">AndroidStudio快捷之道(Mac)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/15/mac下adb环境配置和常用adb命令/">mac下adb环境配置和常用adb命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/01/富文本显示时的emoj或图片和文字对齐的实现/">解决TextView富文本显示时emoj或图片和文字不对齐的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/26/Clickable的一个小bug/">设置SpannableString后，可点击文本不显示bug的解决</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/21/无题/">原博客丢了，重新开始吧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/20/Spannable实现富文本/">Spannable实现TextView/EditText的富文本显示</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/06/实现ViewPager懒加载的三种方法/">实现ViewPager懒加载的三种方法</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2017 AnswerZhao
+            </div>
+            <div class="footer-right">
+                Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 1;
+            var backgroundimg = "url(/background/bg-" + backgroundnum +".jpg)";
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
