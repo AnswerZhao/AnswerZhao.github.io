@@ -3,21 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>设置SpannableString后，可点击文本不显示bug的解决 | AnswerZhao的登山之旅</title>
+  <title>MediaPlayer Error (1,-2147479552), Error (-38,0) | AnswerZhao的登山之旅</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="这两天在使用SpannableString时遇到一个bug，比较灵异，记录一下。就是在利用ClickableSpan（不会的可以看我上一篇博客Spannable实现富文本）设置TextView文字部分可点击时，文字刚开始不显示，只有点击了TextView时，文字才会显示（见下图），刚开始以为是哪里设置出了问题，各种检查，但是都没问题呀。">
+  <meta name="description" content="播放视频时，采用TextureView+MediaPlayer的方案，一切都照旧。可是，在红米3s上却出现了问题。当第一个页面加载了自定义的播放器后，再打开有播放器的第二个页面时，第二个页面的播放器就不能正常播放了。提示如下错误：
+
+MediaPlayer: Error (1,-2147479552), Error (-38,0), stop called in state 0">
 <meta property="og:type" content="article">
-<meta property="og:title" content="设置SpannableString后，可点击文本不显示bug的解决">
-<meta property="og:url" content="http://answerzhao.github.io/2016/06/26/Clickable的一个小bug/index.html">
+<meta property="og:title" content="MediaPlayer Error (1,-2147479552), Error (-38,0)">
+<meta property="og:url" content="http://answerzhao.github.io/2017/01/10/Error in MediaPlayer and TextureView/index.html">
 <meta property="og:site_name" content="AnswerZhao的登山之旅">
-<meta property="og:description" content="这两天在使用SpannableString时遇到一个bug，比较灵异，记录一下。就是在利用ClickableSpan（不会的可以看我上一篇博客Spannable实现富文本）设置TextView文字部分可点击时，文字刚开始不显示，只有点击了TextView时，文字才会显示（见下图），刚开始以为是哪里设置出了问题，各种检查，但是都没问题呀。">
-<meta property="og:image" content="http://o73fmyk7q.bkt.clouddn.com/SpanDemo_bug1.png">
-<meta property="og:image" content="http://o73fmyk7q.bkt.clouddn.com/SpanDemo_bug2.png">
-<meta property="og:updated_time" content="2016-09-02T10:52:59.000Z">
+<meta property="og:description" content="播放视频时，采用TextureView+MediaPlayer的方案，一切都照旧。可是，在红米3s上却出现了问题。当第一个页面加载了自定义的播放器后，再打开有播放器的第二个页面时，第二个页面的播放器就不能正常播放了。提示如下错误：
+
+MediaPlayer: Error (1,-2147479552), Error (-38,0), stop called in state 0">
+<meta property="og:updated_time" content="2017-12-02T06:27:39.291Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="设置SpannableString后，可点击文本不显示bug的解决">
-<meta name="twitter:description" content="这两天在使用SpannableString时遇到一个bug，比较灵异，记录一下。就是在利用ClickableSpan（不会的可以看我上一篇博客Spannable实现富文本）设置TextView文字部分可点击时，文字刚开始不显示，只有点击了TextView时，文字才会显示（见下图），刚开始以为是哪里设置出了问题，各种检查，但是都没问题呀。">
-<meta name="twitter:image" content="http://o73fmyk7q.bkt.clouddn.com/SpanDemo_bug1.png">
+<meta name="twitter:title" content="MediaPlayer Error (1,-2147479552), Error (-38,0)">
+<meta name="twitter:description" content="播放视频时，采用TextureView+MediaPlayer的方案，一切都照旧。可是，在红米3s上却出现了问题。当第一个页面加载了自定义的播放器后，再打开有播放器的第二个页面时，第二个页面的播放器就不能正常播放了。提示如下错误：
+
+MediaPlayer: Error (1,-2147479552), Error (-38,0), stop called in state 0">
   
     <link rel="alternative" href="/atom.xml" title="AnswerZhao的登山之旅" type="application/atom+xml">
   
@@ -230,11 +233,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-Clickable的一个小bug" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Error in MediaPlayer and TextureView" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/06/26/Clickable的一个小bug/" class="article-date">
-      <time datetime="2016-06-26T15:28:37.000Z" itemprop="datePublished">2016-06-26</time>
+      <a href="/2017/01/10/Error in MediaPlayer and TextureView/" class="article-date">
+      <time datetime="2017-01-10T15:10:12.000Z" itemprop="datePublished">2017-01-10</time>
 </a>
     </div>
   
@@ -247,7 +250,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      设置SpannableString后，可点击文本不显示bug的解决
+      MediaPlayer Error (1,-2147479552), Error (-38,0)
     </h1>
   
 
@@ -262,7 +265,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bugs/">bugs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/富文本/">富文本</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多媒体/">多媒体</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -272,16 +275,22 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>这两天在使用SpannableString时遇到一个bug，比较灵异，记录一下。<br>就是在利用ClickableSpan（不会的可以看我上一篇博客<a href="http://answerzhao.github.io/2016/06/20/Spannable%E5%AE%9E%E7%8E%B0%E5%AF%8C%E6%96%87%E6%9C%AC/#more">Spannable实现富文本</a>）设置TextView文字部分可点击时，文字刚开始不显示，只有点击了TextView时，文字才会显示（见下图），刚开始以为是哪里设置出了问题，各种检查，但是都没问题呀。</p>
+        <p>播放视频时，采用TextureView+MediaPlayer的方案，一切都照旧。可是，在红米3s上却出现了问题。当第一个页面加载了自定义的播放器后，再打开有播放器的第二个页面时，第二个页面的播放器就不能正常播放了。提示如下错误：</p>
+<blockquote>
+<p>MediaPlayer: Error (1,-2147479552), Error (-38,0), stop called in state 0 </p>
+</blockquote>
 <ul>
 <li><a id="more"></a>
 </li>
 </ul>
-<p>有bug得显示：<br><img src="http://o73fmyk7q.bkt.clouddn.com/SpanDemo_bug1.png" alt=""><br>于是，就简化问题，去掉各种附加属性设置，然后在依次添加相应属性，找问题所在，最后定位在TextView的gravity上。我发现，只要设置了gravity属性，TextView的显示就会不正常。因此，就去掉gravity属性的设置，然后，一切回归平静，TextView依旧是那个简约而不简单的姿态。</p>
-<p><img src="http://o73fmyk7q.bkt.clouddn.com/SpanDemo_bug2.png" alt="">   </p>
-<p>但是问题还没有完，其他的Span设置呢，于是又试了ForegroundColorSpan、BackgroundColorSpan等，结果都无问题。那就是可点击事件引起的喽。于是，再次回归的可点击设置上，由于我们需要TextView能够响应文本点击事件，我们就需要调用这个方法：tvContent.setMovementMethod(LinkMovementMethod.getInstance())。</p>
-<p>Bingo，终于找到了造成问题的罪魁祸首–就是setMovementMethod方法和gravity属性设置是有冲突，造成文本显示的不正常。因此，如果设置了TextView的文本可点击，那么就去掉gravity属性吧。</p>
-<p>以上，谢谢。</p>
+<p>播放视频时，采用TextureView+MediaPlayer的方案，一切都照旧。可是，在红米3s上却出现了问题。当第一个页面加载了自定义的播放器后，再打开有播放器的第二个页面时，第二个页面的播放器就不能正常播放了，一直在输出错误的log，如下所示。</p>
+<blockquote>
+<p>01-10 11:07:36.259 9688-9699/com.mediaplayer.demo E/MediaPlayer: error (1, -2147479552)<br>01-10 11:07:36.260 9688-9688/com.mediaplayer.demo E/MediaPlayer: Error (1,-2147479552)<br>01-10 11:07:36.262 9688-9729/com.mediaplayer.demo E/MediaPlayer: error (1, -38)<br>01-10 11:07:36.685 9688-9688/com.mediaplayer.demo E/MediaPlayer: stop called in state 1<br>01-10 11:07:36.685 9688-9688/com.mediaplayer.demo E/MediaPlayer: error (-38, 0)<br>01-10 11:07:36.685 9688-9688/com.mediaplayer.demo E/MediaPlayer: Error (1,-38)<br>01-10 11:07:37.047 9688-9688/com.mediaplayer.demo E/MediaPlayer: stop called in state 0<br>01-10 11:08:00.632 9688-9688/com.mediaplayer.demo E/MediaPlayer: start called in state 0<br>01-10 11:08:00.632 9688-9688/com.mediaplayer.demo E/MediaPlayer: error (-38, 0)<br>01-10 11:08:00.633 9688-9688/com.mediaplayer.demo E/MediaPlayer: start called in state 0<br>01-10 11:08:00.633 9688-9688/com.mediaplayer.demo E/MediaPlayer: error (-38, 0)<br>01-10 11:08:00.639 9688-9688/com.mediaplayer.demo E/MediaPlayer: Error (-38,0)<br>01-10 11:08:01.087 9688-9688/com.mediaplayer.demo E/MediaPlayer: stop called in state 0<br>01-10 11:08:01.088 9688-9688/com.mediaplayer.demo E/MediaPlayer: Error (-38,0)<br>01-10 11:08:01.426 9688-9688/com.mediaplayer.demo E/MediaPlayer: stop called in state 0</p>
+</blockquote>
+<p>没道理啊，测试了其他近十几款不同牌子和型号的手机都没问题，而且红米3都没问题，但是红米3s就是不行。为何呢？开始分析日志。</p>
+<p>查询错误：Mediaplayer start called in state 0。Stack Overflow上有给出<a href="http://stackoverflow.com/questions/9008770/media-player-called-in-state-0-error-38-0" target="_blank" rel="external">解决办法</a>的，就是在start()之前要调用MediaPlayer.prepraeAsync()，可是prepare已经在设置视频源时调用过了，没有解决，此方案不行。</p>
+<p>吭哧吭哧……经过多次的测试与分析发现，对于红米3S等低配手机，当内存中存在多个TextureView时，如果在当前界面onPause()时，会调用onSurfaceTextureDestroyed()，导致下一个界面在初始化MediaPlayer绑定TextureView时出现error (1, -2147479552)的报错，因此需要在onSurfaceTextureDestroyed()时调用将MediaPlayer和Surface解除关系，在SurfaceView调用Update时再关联。另外，关于Surface的valid有些机型也表现的很诡异，按理说在onSurfaceTextureAvailable(SurfaceTexture)回调后获取Surface应该是可以立即使用的，但是有些机型就是一直提示invalid的报错，在此也一定做了兼容处理。详细解决方案见下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">    Surface mSurface;</div><div class="line"></div><div class="line">    <span class="comment">/**  </span></div><div class="line">     * 标记SurfaceTexture是否销毁。对于红米3S等低配手机，在当前界面onPause()时，会调用</div><div class="line">     * onSurfaceTextureDestroyed()，导致下一个界面在初始化MediaPlayer时出现</div><div class="line">     * error (1, -2147479552)的报错，因此需要在onSurfaceTextureDestroyed()时调用</div><div class="line">     * 将MediaPlayer和Surface解除关系，在SurfaceView调用Update时再关联。</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> isSurfaceTextureDestroyed = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSurfaceTextureAvailable</span><span class="params">(SurfaceTexture surfaceTexture, <span class="keyword">int</span> width, <span class="keyword">int</span> height)</span> </span>&#123;</div><div class="line">        Log.d(TAG, <span class="string">"onSurfaceTextureAvailable: "</span>);</div><div class="line"></div><div class="line">        mSurface  = <span class="keyword">new</span> Surface(surfaceTexture);</div><div class="line">        <span class="comment">// 当Surface有效后再绑定MediaPlayer</span></div><div class="line">        Observable.just(<span class="keyword">true</span>)</div><div class="line">                .retryUntil(() -&gt; mSurface.isValid())</div><div class="line">                .subscribeOn(AndroidSchedulers.mainThread())</div><div class="line">                .subscribe(b -&gt;&#123;</div><div class="line">                    <span class="keyword">if</span> (mMediaPlayer != <span class="keyword">null</span>) &#123;</div><div class="line">                        Log.d(TAG, <span class="string">"onSurfaceTextureAvailable: setSurface "</span> + mSurface.isValid());</div><div class="line">                        mMediaPlayer.setSurface(mSurface);</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSurfaceTextureSizeChanged</span><span class="params">(SurfaceTexture surface, <span class="keyword">int</span> width, <span class="keyword">int</span> height)</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onSurfaceTextureDestroyed</span><span class="params">(SurfaceTexture surface)</span> </span>&#123;</div><div class="line">        Log.d(TAG, <span class="string">"onSurfaceTextureDestroyed--"</span> + <span class="keyword">this</span>.hashCode());</div><div class="line">        isSurfaceTextureDestroyed = <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">if</span> (mMediaPlayer != <span class="keyword">null</span>) &#123;</div><div class="line">            mMediaPlayer.setSurface(<span class="keyword">null</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSurfaceTextureUpdated</span><span class="params">(SurfaceTexture surface)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (isSurfaceTextureDestroyed) &#123;</div><div class="line">            Log.d(TAG, <span class="string">"onSurfaceTextureUpdated--"</span> + <span class="keyword">this</span>.hashCode());</div><div class="line">            <span class="comment">// 当前页面获取焦点后判断Surface时候销毁，已销毁则重新绑定</span></div><div class="line">            mMediaPlayer.setSurface(<span class="keyword">new</span> Surface(surface));</div><div class="line">            isSurfaceTextureDestroyed = <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -290,13 +299,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/06/26/Clickable的一个小bug/">设置SpannableString后，可点击文本不显示bug的解决</a></p>
+        <p><span>本文标题:</span><a href="/2017/01/10/Error in MediaPlayer and TextureView/">MediaPlayer Error (1,-2147479552), Error (-38,0)</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 AnswerZhao 的个人博客">AnswerZhao</a></p>
-        <p><span>发布时间:</span>2016年06月26日 - 23时28分</p>
-        <p><span>最后更新:</span>2016年09月02日 - 18时52分</p>
+        <p><span>发布时间:</span>2017年01月10日 - 23时10分</p>
+        <p><span>最后更新:</span>2017年12月02日 - 14时27分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/06/26/Clickable的一个小bug/" title="设置SpannableString后，可点击文本不显示bug的解决">http://answerzhao.github.io/2016/06/26/Clickable的一个小bug/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://answerzhao.github.io/2016/06/26/Clickable的一个小bug/　　作者: AnswerZhao" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/01/10/Error in MediaPlayer and TextureView/" title="MediaPlayer Error (1,-2147479552), Error (-38,0)">http://answerzhao.github.io/2017/01/10/Error in MediaPlayer and TextureView/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://answerzhao.github.io/2017/01/10/Error in MediaPlayer and TextureView/　　作者: AnswerZhao" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -309,18 +318,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2016/07/01/富文本显示时的emoj或图片和文字对齐的实现/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          解决TextView富文本显示时emoj或图片和文字不对齐的问题
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/06/21/无题/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">原博客丢了，重新开始吧</div>
+    <a href="/2016/10/16/issues in using Glide/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Glide使用中的踩坑和填坑</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -379,7 +379,7 @@
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/06/26/Clickable的一个小bug/" data-title="设置SpannableString后，可点击文本不显示bug的解决" data-url="http://answerzhao.github.io/2016/06/26/Clickable的一个小bug/"></div>
+    <div class="ds-thread" data-thread-key="2017/01/10/Error in MediaPlayer and TextureView/" data-title="MediaPlayer Error (1,-2147479552), Error (-38,0)" data-url="http://answerzhao.github.io/2017/01/10/Error in MediaPlayer and TextureView/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -402,13 +402,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/07/01/富文本显示时的emoj或图片和文字对齐的实现/" title="上一篇: 解决TextView富文本显示时emoj或图片和文字不对齐的问题">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2016/06/21/无题/" title="下一篇: 原博客丢了，重新开始吧">
+            <a href="/2016/10/16/issues in using Glide/" title="下一篇: Glide使用中的踩坑和填坑">
                 <i class="fa fa-angle-right"></i>
             </a>
         
