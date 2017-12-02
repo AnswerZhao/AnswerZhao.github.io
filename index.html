@@ -143,7 +143,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/AS/" style="font-size: 10px;">AS</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Glide/" style="font-size: 10px;">Glide</a> <a href="/tags/ViewPager/" style="font-size: 10px;">ViewPager</a> <a href="/tags/adb/" style="font-size: 10px;">adb</a> <a href="/tags/bugs/" style="font-size: 10px;">bugs</a> <a href="/tags/emoj/" style="font-size: 10px;">emoj</a> <a href="/tags/多媒体/" style="font-size: 15px;">多媒体</a> <a href="/tags/富文本/" style="font-size: 20px;">富文本</a> <a href="/tags/折腾/" style="font-size: 10px;">折腾</a>
+                        <a href="/tags/AS/" style="font-size: 10px;">AS</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Glide/" style="font-size: 10px;">Glide</a> <a href="/tags/ViewPager/" style="font-size: 10px;">ViewPager</a> <a href="/tags/adb/" style="font-size: 10px;">adb</a> <a href="/tags/bugs/" style="font-size: 10px;">bugs</a> <a href="/tags/emoj/" style="font-size: 10px;">emoj</a> <a href="/tags/多媒体/" style="font-size: 20px;">多媒体</a> <a href="/tags/富文本/" style="font-size: 20px;">富文本</a> <a href="/tags/折腾/" style="font-size: 10px;">折腾</a>
                     </div>
                 </section>
                 
@@ -230,6 +230,74 @@
     </div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-Video edit tech and OpenGL materials" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/18/Video edit tech and OpenGL materials/" class="article-date">
+      <time datetime="2017-03-18T14:11:18.000Z" itemprop="datePublished">2017-03-18</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/18/Video edit tech and OpenGL materials/">视频编辑技术文章和OpenGL学习资料汇总</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>此文收集了当前的一些视频编辑平台术分享的一些技术文章，和OpenGL的一些学习资料，便于学习和借鉴。站在巨人的肩上可以看得更远。收集也是学习的一个阶段。</p>
+<ul>
+<li>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多媒体/">多媒体</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a  href="/2017/03/18/Video edit tech and OpenGL materials/#more">全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Android中音视频合成方案分析" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -849,75 +917,10 @@
 
 
   
-    <article id="post-实现ViewPager懒加载的三种方法" class="article article-type-post" itemscope itemprop="blogPost">
   
-    <div class="article-meta">
-      <a href="/2016/06/06/实现ViewPager懒加载的三种方法/" class="article-date">
-      <time datetime="2016-06-06T12:00:00.000Z" itemprop="datePublished">2016-06-06</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/06/实现ViewPager懒加载的三种方法/">实现ViewPager懒加载的三种方法</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>在项目中ViewPager和Fragment接口框架已经是处处可见，但是在使用中，我们肯定不希望用户在当前页面时就在前后页面的数据，加入数据量很大，而用户又不愿意左右滑动浏览，那么这时候ViewPager中本来充满善意的预加载就有点令人不爽了。我们能做的就是屏蔽掉ViewPager的预加载机制。虽然ViewPager中提供的有setOffscreenPageLimit()来控制其预加载的数目，但是当设置为0后我们发现其根本没效果，这个的最小值就是1，也就是你只能最少前后各预加载一页。那么，这时候就得另觅方法了。</p>
-<p>以下三种方法是我在学习和项目中尝试过的，需求实现了，但各有千秋，可结合不同场景使用。总结在此，希望对他人有所借鉴。也可在CSDN看到我的原博客。这里就是直接拿过来，对新的博客地址练下手。</p>
-<ul>
-<li>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fragment/">Fragment</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ViewPager/">ViewPager</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/06/06/实现ViewPager懒加载的三种方法/#more">全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 </div>
       <footer id="footer">

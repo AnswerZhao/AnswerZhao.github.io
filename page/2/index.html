@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: Fragment | AnswerZhao的登山之旅</title>
+  <title>AnswerZhao的登山之旅</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="我想要怒放的生命">
 <meta property="og:type" content="website">
 <meta property="og:title" content="AnswerZhao的登山之旅">
-<meta property="og:url" content="http://answerzhao.github.io/tags/Fragment/index.html">
+<meta property="og:url" content="http://answerzhao.github.io/page/2/index.html">
 <meta property="og:site_name" content="AnswerZhao的登山之旅">
 <meta property="og:description" content="我想要怒放的生命">
 <meta name="twitter:card" content="summary">
@@ -27,6 +27,9 @@
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   
+    
+    
+  
   
       <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
   
@@ -37,10 +40,10 @@
       var yiliaConfig = {
           fancybox: true,
           animate: true,
-          isHome: false,
+          isHome: true,
           isPost: false,
           isArchive: false,
-          isTag: true,
+          isTag: false,
           isCategory: false,
           open_in_new: false
       }
@@ -228,56 +231,80 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-实现ViewPager懒加载的三种方法" class="article article-type-post" itemscope itemprop="blogPost">
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2016/06/06/实现ViewPager懒加载的三种方法/" class="archive-article-date">
-      <time datetime="2016-06-06T12:00:00.000Z" itemprop="datePublished">06-06</time>
+    <div class="article-meta">
+      <a href="/2016/06/06/实现ViewPager懒加载的三种方法/" class="article-date">
+      <time datetime="2016-06-06T12:00:00.000Z" itemprop="datePublished">2016-06-06</time>
 </a>
-        </div>
-         
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/06/06/实现ViewPager懒加载的三种方法/">实现ViewPager懒加载的三种方法</a>
+      <a class="article-title" href="/2016/06/06/实现ViewPager懒加载的三种方法/">实现ViewPager懒加载的三种方法</a>
     </h1>
   
 
-        <div class="article-info info-on-archive">
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
           
+              <p>在项目中ViewPager和Fragment接口框架已经是处处可见，但是在使用中，我们肯定不希望用户在当前页面时就在前后页面的数据，加入数据量很大，而用户又不愿意左右滑动浏览，那么这时候ViewPager中本来充满善意的预加载就有点令人不爽了。我们能做的就是屏蔽掉ViewPager的预加载机制。虽然ViewPager中提供的有setOffscreenPageLimit()来控制其预加载的数目，但是当设置为0后我们发现其根本没效果，这个的最小值就是1，也就是你只能最少前后各预加载一页。那么，这时候就得另觅方法了。</p>
+<p>以下三种方法是我在学习和项目中尝试过的，需求实现了，但各有千秋，可结合不同场景使用。总结在此，希望对他人有所借鉴。也可在CSDN看到我的原博客。这里就是直接拿过来，对新的博客地址练下手。</p>
+<ul>
+<li>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
     <div class="article-category tagcloud">
     <a class="article-category-link" href="/categories/Android/">Android</a>
     </div>
 
 
-          
+      
     <div class="article-tag tagcloud">
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fragment/">Fragment</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ViewPager/">ViewPager</a></li></ul>
     </div>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
+      
+        <p class="article-more-link">
+          <a  href="/2016/06/06/实现ViewPager懒加载的三种方法/#more">全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
     
+  </div>
+  
+</article>
 
+
+
+
+
+
+
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </nav>
+  
 </div>
       <footer id="footer">
     <div class="outer">
@@ -342,17 +369,6 @@
         };
     })
 </script>
-
-    <button class="hide-labels">TAG 开关</button>
-    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js">
-    </script>
-    <script>
-        $(document).ready(function() {
-            $("button").click(function() {
-                $(".article-info").toggle(200);
-            });
-        });
-    </script>
 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
