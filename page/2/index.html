@@ -273,7 +273,7 @@
       </header>
       
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="article-entry" itemprop="articleBody" style="margin-top:10px;">
       
           
               <p>在项目中ViewPager和Fragment接口框架已经是处处可见，但是在使用中，我们肯定不希望用户在当前页面时就在前后页面的数据，加入数据量很大，而用户又不愿意左右滑动浏览，那么这时候ViewPager中本来充满善意的预加载就有点令人不爽了。我们能做的就是屏蔽掉ViewPager的预加载机制。虽然ViewPager中提供的有setOffscreenPageLimit()来控制其预加载的数目，但是当设置为0后我们发现其根本没效果，这个的最小值就是1，也就是你只能最少前后各预加载一页。那么，这时候就得另觅方法了。</p>

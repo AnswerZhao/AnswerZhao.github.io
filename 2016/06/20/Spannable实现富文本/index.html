@@ -286,7 +286,7 @@
       </div>
       
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="article-entry" itemprop="articleBody" style="margin-top:10px;">
       
           
         <p>TextView和EditText都可以设置纯文本的字符串，但是当一个字符串中需要设置不同的文字格式或者插入图片时，我们不可能去设置多个TextView+ImageView来实现，那样要累死了。（话说，刚开始我就是动态添加四个TextView来实现一个效果，好囧）。我们知道，方法setText(CharSequence text)中接收的是CharSequence。而SpannableString和SpannableStringBuilder是其实现类，是可以直接赋值的，并且，两者的setSpan()方法可以设置一些格式对象（例如字体大小，下划线，替换为图片，等），这就可以实现富文本了。</p>
